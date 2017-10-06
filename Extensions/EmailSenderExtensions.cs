@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using aspnetcore_auth.Services;
+using NetCoreVue.Services;
 
-namespace aspnetcore_auth.Services
+namespace NetCoreVue.Services
 {
     public static class EmailSenderExtensions
     {
