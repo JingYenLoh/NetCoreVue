@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -9,12 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using aspnetcore_auth.Models;
-using aspnetcore_auth.Models.ManageViewModels;
-using aspnetcore_auth.Services;
+using NetCoreVue.Models;
+using NetCoreVue.Models.ManageViewModels;
+using NetCoreVue.Services;
 
-namespace aspnetcore_auth.Controllers
+namespace NetCoreVue.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
@@ -352,8 +350,8 @@ namespace aspnetcore_auth.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
-            if (!disable2faResult.Succeeded)
+            var disable2FaResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
+            if (!disable2FaResult.Succeeded)
             {
                 throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
             }
@@ -405,10 +403,10 @@ namespace aspnetcore_auth.Controllers
             // Strip spaces and hypens
             var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+            var is2FaTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-            if (!is2faTokenValid)
+            if (!is2FaTokenValid)
             {
                 ModelState.AddModelError("model.Code", "Verification code is invalid.");
                 return View(model);
@@ -495,7 +493,7 @@ namespace aspnetcore_auth.Controllers
         {
             return string.Format(
                 AuthenicatorUriFormat,
-                _urlEncoder.Encode("aspnetcore_auth"),
+                _urlEncoder.Encode("NetCoreVue"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

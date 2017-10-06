@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using aspnetcore_auth.Models;
-using aspnetcore_auth.Models.AccountViewModels;
-using aspnetcore_auth.Services;
+using NetCoreVue.Models;
+using NetCoreVue.Models.AccountViewModels;
+using NetCoreVue.Services;
 
-namespace aspnetcore_auth.Controllers
+namespace NetCoreVue.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
