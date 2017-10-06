@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace aspnetcore_auth.Services
+namespace NetCoreVue.Services
 {
     public interface IEmailSender
     {

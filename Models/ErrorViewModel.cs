@@ -1,6 +1,6 @@
 using System;
 
-namespace aspnetcore_auth.Models
+namespace NetCoreVue.Models
 {
     public class ErrorViewModel
     {

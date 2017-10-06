@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace aspnetcore_auth.Models.ManageViewModels
+namespace NetCoreVue.Models.ManageViewModels
 {
     public class ExternalLoginsViewModel
     {
