@@ -17,6 +17,7 @@ namespace NetCoreVue
     {
         public Startup(IHostingEnvironment env)
         {
+            // TODO: Potentially move to Program.cs
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -30,9 +31,6 @@ namespace NetCoreVue
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-//            services.AddDbContext<ApplicationDbContext>(options =>
-//                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -94,13 +92,6 @@ namespace NetCoreVue
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            // TODO: Currently DataSeeder is borked in 2.0
-            // System.InvalidOperationException: Cannot resolve
-            // scoped service NetCoreVue.Data.ApplicationDbContext
-            // from root provider.
-            // Possible solution: https://github.com/aspnet/Home/issues/2188
-//            app.SeedData();
         }
     }
 }
