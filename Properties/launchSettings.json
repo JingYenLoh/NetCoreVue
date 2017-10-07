@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "aspnetcore-auth": {
+    "NetCoreVue": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
