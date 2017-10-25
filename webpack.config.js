@@ -34,24 +34,24 @@ module.exports = env => {
           { test: /\.(png|jpg|jpeg|gif|svg|ttf|woff|woff2|eot)$/, use: 'url-loader?limit=25000' }
         ]
       },
-      // plugins: [
-      //   new webpack.DllReferencePlugin({
-      //     context: __dirname,
-      //     manifest: require('./wwwroot/dist/vendor-manifest.json')
-      //   })
-      // ].concat(isDevBuild
-      //   ? [
-      //     // Plugins that apply in development builds only
-      //     new webpack.SourceMapDevToolPlugin({
-      //       filename: '[file].map', // Remove this line if you prefer inline source maps
-      //       moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
-      //     })
-      //   ]
-      //   : [
-      //     // Plugins that apply in production builds only
-      //     new webpack.optimize.UglifyJsPlugin(),
-      //     new ExtractTextPlugin('site.css')
-      //   ])
+      plugins: [
+        new webpack.DllReferencePlugin({
+          context: __dirname,
+          manifest: require('./wwwroot/dist/vendor-manifest.json')
+        })
+      ].concat(isDevBuild
+        ? [
+          // Plugins that apply in development builds only
+          new webpack.SourceMapDevToolPlugin({
+            filename: '[file].map', // Remove this line if you prefer inline source maps
+            moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
+          })
+        ]
+        : [
+          // Plugins that apply in production builds only
+          new webpack.optimize.UglifyJsPlugin(),
+          new ExtractTextPlugin('site.css')
+        ])
     }
   ]
 }
