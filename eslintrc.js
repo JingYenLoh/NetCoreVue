@@ -1,4 +1,5 @@
 // http://eslint.org/docs/user-guide/configuring
+const warnInDevelopment = process.env.NODE_ENV === 'production' ? 'error' : 'warn'
 
 module.exports = {
   root: true,
@@ -10,7 +11,10 @@ module.exports = {
     browser: true,
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-  extends: 'standard',
+  extends: [
+    'standard',
+    'plugin:vue/recommended'
+  ],
   // required to lint *.vue files
   plugins: [
     'html',
@@ -23,6 +27,8 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': warnInDevelopment,
+    // allow console logging during development
+    'no-console': warnInDevelopment
   }
 }
