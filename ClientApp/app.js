@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Buefy from 'buefy'
 import axios from 'axios'
+import VeeValidate from 'vee-validate'
 import router from './router'
 import store from './store'
 import { sync } from 'vuex-router-sync'
@@ -11,6 +12,8 @@ import 'buefy/lib/buefy.css'
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
 })
+
+Vue.use(VeeValidate)
 
 Vue.prototype.$http = axios
 
