@@ -7,17 +7,17 @@
       </router-link>
 
       <span
-        :class="{ 'navbar': true, 'navbar-burger': true, 'is-active': isActive }"
-        @click='toggle'
+            class="navbar navbar-burger"
+            :class="{ 'is-active': isActive }"
+            @click='isActive = !isActive'
       >
         <span></span>
         <span></span>
         <span></span>
       </span>
-
     </div>
 
-    <div :class="{ 'navbar-menu': true, 'is-active': isActive }">
+        <div class="navbar-menu" :class="{ 'is-active': isActive }">
       <div class="navbar-start">
 
         <div class="navbar-item has-dropdown is-hoverable">
@@ -59,11 +59,6 @@ export default {
     return {
       routes,
       isActive: false
-    }
-  },
-  methods: {
-    toggle () {
-      this.isActive = !this.isActive
     }
   }
 }
