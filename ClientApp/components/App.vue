@@ -1,13 +1,8 @@
 <template>
-  <div id="app" class="container is-fluid">
-    <div class="container">
-      <nav-bar></nav-bar>
-    </div>
-    <div class="container">
-      <section class="section">
-        <router-view></router-view>
-      </section>
-    </div>
+  <div id="app">
+    <nav-bar></nav-bar>
+
+    <router-view></router-view>
   </div>
 </template>
 
