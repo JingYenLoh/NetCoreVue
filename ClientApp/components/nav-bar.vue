@@ -1,53 +1,54 @@
-<template>
+﻿<template>
   <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
+    <div class="container">
+      <div class="navbar-brand">
 
-      <router-link class="navbar-item" to="/">
-            <img src="https://vuejs.org/images/logo.png" alt="Vue is the best" width="28" height="28" />
-      </router-link>
+        <router-link class="navbar-item" to="/">
+          <img src="https://vuejs.org/images/logo.png" alt="Vue is the best" width="28" height="28" />
+        </router-link>
 
-      <span
-            class="navbar navbar-burger"
-            :class="{ 'is-active': isActive }"
-            @click='isActive = !isActive'
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-    </div>
+        <span
+          class="navbar navbar-burger"
+          :class="{ 'is-active': isActive }"
+          @click='isActive = !isActive'
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
 
-        <div class="navbar-menu" :class="{ 'is-active': isActive }">
-      <div class="navbar-start">
+      <div class="navbar-menu" :class="{ 'is-active': isActive }">
+        <div class="navbar-start">
 
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">Session</a>
-          <div class="navbar-dropdown">
-                <router-link class="navbar-item" :to="'/Sessions/Index'" exact-active-class="is-active">
-              Manage Session
-            </router-link>
-                <router-link class="navbar-item" :to="'/Sessions/Create'" exact-active-class="is-active">
-              Create Session
-            </router-link>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Session</a>
+            <div class="navbar-dropdown">
+              <router-link class="navbar-item" :to="'/Sessions/Index'" exact-active-class="is-active">
+                Manage Session
+              </router-link>
+              <router-link class="navbar-item" :to="'/Sessions/Create'" exact-active-class="is-active">
+                Create Session
+              </router-link>
+            </div>
           </div>
-        </div>
 
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">Customer</a>
-          <div class="navbar-dropdown">
-                <router-link class="navbar-item" :to="'/Customers/Index'" exact-active-class="is-active">
-              Manage Customers
-            </router-link>
-                <router-link class="navbar-item" :to="'/Customers/Create'" exact-active-class="is-active">
-              Create Customer
-            </router-link>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Customer</a>
+            <div class="navbar-dropdown">
+              <router-link class="navbar-item" :to="'/Customers/Index'" exact-active-class="is-active">
+                Manage Customers
+              </router-link>
+              <router-link class="navbar-item" :to="'/Customers/Create'" exact-active-class="is-active">
+                Create Customer
+              </router-link>
+            </div>
           </div>
+
         </div>
 
       </div>
-
     </div>
-
   </nav>
 </template>
 
