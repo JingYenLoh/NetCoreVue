@@ -1,9 +1,9 @@
-﻿<template>
+<template>
   <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
 
       <router-link class="navbar-item" to="/">
-        <img src="https://sentry.io/_assets/logos/vue-wordmark-3eed5d97e4588a2d4f77f7f331635f8fb238d06c7e8044b1720216058a022e2d.svg" alt="Vue is the best" width="112" height="28" />
+            <img src="https://vuejs.org/images/logo.png" alt="Vue is the best" width="28" height="28" />
       </router-link>
 
       <span
