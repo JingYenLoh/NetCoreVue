@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreVue.Data;
@@ -23,9 +21,26 @@ namespace NetCoreVue.Controllers
 
         // GET: api/CustomerAccounts
         [HttpGet]
-        public IEnumerable<CustomerAccount> GetCustomerAccounts()
+        public IActionResult GetCustomerAccounts()
         {
-            return _context.CustomerAccounts;
+            // return _context.CustomerAccounts;
+            var query = _context.CustomerAccounts
+            .Include(acc => acc.AccountRates)
+            .Include(acc => acc.CreatedBy)
+            .Include(acc => acc.UpdatedBy)
+            .Include(acc => acc.InstructorAccounts)
+            .Select(acc => new
+            {
+                customerAccountId = acc.CustomerAccountId,
+                accountName       = acc.AccountName,
+                numAccountRates   = acc.AccountRates.Count,
+                numInstructors    = acc.InstructorAccounts.Count,
+                comments          = acc.Comments,
+                updatedBy         = acc.UpdatedBy.FullName,
+                updatedAt         = acc.UpdatedAt,
+                isVisible         = acc.IsVisible
+            });
+            return Json(query);
         }
 
         // GET: api/CustomerAccounts/5
