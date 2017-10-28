@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
 
@@ -13,26 +13,37 @@
         <span></span>
         <span></span>
         <span></span>
-        </span>
+      </span>
 
     </div>
 
     <div :class="{ 'navbar-menu': true, 'is-active': isActive }">
-        <!-- Sessions -->
-        <router-link class="navbar-item" :to="'/Sessions/Index'">
-          Session
-      </router-link>
-        <router-link class="navbar-item" :to="'/Sessions/Create'">
-          Create Session
-        </router-link>
+      <div class="navbar-start">
 
-        <!-- Customers -->
-        <router-link class="navbar-item" :to="'/Customers/Index'">
-          Customers
-        </router-link>
-        <router-link class="navbar-item" :to="'/Customers/Create'">
-          Create Customer
-        </router-link>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Session</a>
+          <div class="navbar-dropdown">
+            <router-link class="navbar-item" :to="'/Sessions/Index'">
+              Manage Session
+            </router-link>
+            <router-link class="navbar-item" :to="'/Sessions/Create'">
+              Create Session
+            </router-link>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Customer</a>
+          <div class="navbar-dropdown">
+            <router-link class="navbar-item" :to="'/Customers/Index'">
+              Manage Customers
+            </router-link>
+            <router-link class="navbar-item" :to="'/Customers/Create'">
+              Create Customer
+            </router-link>
+          </div>
+        </div>
+
       </div>
 
     </div>
