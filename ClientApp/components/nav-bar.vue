@@ -23,10 +23,10 @@
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">Session</a>
           <div class="navbar-dropdown">
-            <router-link class="navbar-item" :to="'/Sessions/Index'">
+                <router-link class="navbar-item" :to="'/Sessions/Index'" exact-active-class="is-active">
               Manage Session
             </router-link>
-            <router-link class="navbar-item" :to="'/Sessions/Create'">
+                <router-link class="navbar-item" :to="'/Sessions/Create'" exact-active-class="is-active">
               Create Session
             </router-link>
           </div>
@@ -35,10 +35,10 @@
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">Customer</a>
           <div class="navbar-dropdown">
-            <router-link class="navbar-item" :to="'/Customers/Index'">
+                <router-link class="navbar-item" :to="'/Customers/Index'" exact-active-class="is-active">
               Manage Customers
             </router-link>
-            <router-link class="navbar-item" :to="'/Customers/Create'">
+                <router-link class="navbar-item" :to="'/Customers/Create'" exact-active-class="is-active">
               Create Customer
             </router-link>
           </div>
