@@ -1,4 +1,5 @@
 import HomePage from 'components/home-page'
+import ErrorPage from 'components/ErrorView'
 import CoursePage from 'components/course-page'
 
 // Customer Account
@@ -80,5 +81,13 @@ export const routes = [
     component: Login,
     display: 'Login',
     style: 'user'
+  },
+  {
+    path: '/Error',
+    component: ErrorPage
+  },
+  {
+    path: '*',
+    redirect: '/Error'
   }
 ]
