@@ -1,5 +1,5 @@
-﻿<template>
-  <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+<template>
+  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
 
@@ -8,7 +8,7 @@
         </router-link>
 
         <span
-          class="navbar navbar-burger"
+          class="navbar navbar-burger is-primary"
           :class="{ 'is-active': isActive }"
           @click='isActive = !isActive'
         >
