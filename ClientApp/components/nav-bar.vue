@@ -45,6 +45,10 @@
             </div>
           </div>
 
+          <router-link class="navbar-item" :to="'/Users/Index'">
+            Manage User
+          </router-link>
+
         </div>
 
       </div>
