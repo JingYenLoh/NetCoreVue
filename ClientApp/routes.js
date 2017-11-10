@@ -14,6 +14,12 @@ import SessionPage from 'components/SessionSynopsisView/SessionSynopsisPage'
 import EditSession from 'components/SessionSynopsisView/EditSessionSynopsis'
 import CreateSession from 'components/SessionSynopsisView/CreateSessionSynopsis'
 
+// Account Rates
+import RateHome from 'components/AccountRatesView/index'
+import ManageRate from 'components/AccountRatesView/ManageRate'
+import CreateRate from 'components/AccountRatesView/CreateAccountRate'
+import EditRate from 'components/AccountRatesView/EditAccountRate'
+
 import Login from 'components/LoginView/LoginPage'
 
 export const routes = [
@@ -72,6 +78,30 @@ export const routes = [
         path: 'Edit/:id',
         name: 'editSynopsis',
         component: EditSession,
+        props: true
+      }
+    ]
+  },
+  {
+    path: '/AccountRates',
+    component: RateHome,
+    children: [
+      {
+        path: 'ManageRates/:id/:name', // HACK: name is a hack
+        name: 'manageRates',
+        component: ManageRate,
+        props: true
+      },
+      {
+        path: 'Create/:id',
+        name: 'createRates',
+        component: CreateRate,
+        props: true
+      },
+      {
+        path: 'Edit/:id',
+        name: 'editRates',
+        component: EditRate,
         props: true
       }
     ]
