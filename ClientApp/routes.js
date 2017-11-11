@@ -20,8 +20,6 @@ import ManageRate from 'components/AccountRatesView/ManageRate'
 import CreateRate from 'components/AccountRatesView/CreateAccountRate'
 import EditRate from 'components/AccountRatesView/EditAccountRate'
 
-import Login from 'components/LoginView/LoginPage'
-
 export const routes = [
   {
     path: '/',
@@ -105,12 +103,6 @@ export const routes = [
         props: true
       }
     ]
-  },
-  {
-    path: '/Login',
-    component: Login,
-    display: 'Login',
-    style: 'user'
   },
   {
     path: '/Error',
