@@ -11,7 +11,7 @@
                :selected.sync="selected"
                default-sort="sessionSynopsisName">
 
-        <template scope="props">
+        <template slot-scope="props">
 
           <b-table-column field="sessionSynopsisName"
                           label="Name"
