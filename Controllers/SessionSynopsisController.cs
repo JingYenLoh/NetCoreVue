@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreVue.Data;
@@ -8,6 +8,7 @@ using NetCoreVue.Models;
 
 namespace NetCoreVue.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/SessionSynopsis")]
     public class SessionSynopsisController : Controller
@@ -89,7 +90,8 @@ namespace NetCoreVue.Controllers
                 }
             }
 
-            return NoContent();
+            // return NoContent();
+            return Ok(sessionSynopsis.SessionSynopsisName);
         }
 
         // POST: api/SessionSynopsis
