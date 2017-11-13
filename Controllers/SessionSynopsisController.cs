@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +21,21 @@ namespace NetCoreVue.Controllers
 
         // GET: api/SessionSynopsis
         [HttpGet]
-        public IEnumerable<SessionSynopsis> GetSessionSynopses()
+        public IActionResult GetSessionSynopses()
         {
-            return _context.SessionSynopses;
+            var query = _context.SessionSynopses
+            .Include(ss => ss.UpdatedBy)
+            .Include(ss => ss.CreatedBy)
+            .Select(ss => new
+            {
+                sessionSynopsisId = ss.SessionSynopsisId,
+                sessionSynopsisName = ss.SessionSynopsisName,
+                createdBy = ss.CreatedBy.FullName,
+                isVisible = ss.IsVisible,
+                updatedBy = ss.UpdatedBy.FullName
+            });
+
+            return Ok(query);
         }
 
         // GET: api/SessionSynopsis/5
