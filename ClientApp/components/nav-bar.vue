@@ -68,12 +68,11 @@
 </template>
 
 <script>
-import { routes } from '../routes'
+import axios from 'axios'
 
 export default {
   data () {
     return {
-      routes,
       isActive: false
     }
   },
