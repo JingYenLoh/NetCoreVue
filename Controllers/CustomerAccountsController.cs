@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreVue.Data;
@@ -8,6 +8,7 @@ using NetCoreVue.Models;
 
 namespace NetCoreVue.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/CustomerAccounts")]
     public class CustomerAccountsController : Controller
@@ -52,7 +53,8 @@ namespace NetCoreVue.Controllers
                 return BadRequest(ModelState);
             }
 
-            var customerAccount = await _context.CustomerAccounts.SingleOrDefaultAsync(m => m.CustomerAccountId == id);
+            var customerAccount = await _context.CustomerAccounts
+                .SingleOrDefaultAsync(m => m.CustomerAccountId == id);
 
             if (customerAccount == null)
             {
