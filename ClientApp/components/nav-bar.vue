@@ -51,6 +51,17 @@
 
         </div>
 
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <button class="button is-primary"
+                    @click="signOut">
+              <b-icon pack="fa"
+                      icon="sign-out"></b-icon>
+              <span>Sign out</span>
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </nav>
@@ -64,6 +75,29 @@ export default {
     return {
       routes,
       isActive: false
+    }
+  },
+  methods: {
+    async signOut () {
+      try {
+        const loadingComponent = this.$loading.open()
+
+        const token = document.getElementById('anti-forgery').firstChild.getAttribute('value')
+
+        const instance = axios.create({
+          headers: { 'RequestVerificationToken': token }
+        })
+
+        const response = await instance.post('/Account/Logout')
+
+        if (response.status === 200) {
+          window.location = '/Account/Login'
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        loadingComponent.close()
+      }
     }
   }
 }
