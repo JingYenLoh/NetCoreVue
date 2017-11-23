@@ -18,12 +18,16 @@
     #anti-forgery {
       display: none;
     }
+    #user-id {
+      display: none;
+    }
   </style>
 </head>
 
 <body>
 
   <span id="anti-forgery">@Html.AntiForgeryToken()</span>
+  <span id="user-id">@ViewData["UserId"]</span>
   <div id="app"></div>
 
   <script src="~/dist/vendor.js" asp-append-version="true"></script>

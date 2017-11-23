@@ -4,24 +4,25 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 // TYPES
-const MAIN_SET_COUNTER = 'MAIN_SET_COUNTER'
+const MAIN_SET_USER_ID = 'MAIN_SET_USER_ID'
 
 // STATE
 const state = {
-  counter: 0
+  userId: null
 }
 
 // MUTATIONS
 const mutations = {
-  [MAIN_SET_COUNTER] (state, obj) {
-    state.counter = obj.counter
+  [MAIN_SET_USER_ID] (state, id) {
+    state.userId = id
   }
 }
 
 // ACTIONS
 const actions = ({
-  setCounter ({ commit }, obj) {
-    commit(MAIN_SET_COUNTER, obj)
+  // Doesn't need to be async really, but I was testing code out
+  setUserId ({ commit }, id) {
+    commit(MAIN_SET_USER_ID, id)
   }
 })
 

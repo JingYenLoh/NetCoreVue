@@ -9,14 +9,24 @@
 <script>
 import Vue from 'vue'
 import NavBar from './nav-bar.vue'
+import { mapActions } from 'vuex'
 
 Vue.component('nav-bar', NavBar)
 
 export default {
-  data() {
+  data () {
     return {
 
     }
+  },
+  created () {
+    const userId = document.getElementById('user-id').innerHTML
+    this.setUserId(userId)
+  },
+  methods: {
+    ...mapActions([
+      'setUserId'
+    ])
   }
 }
 </script>
