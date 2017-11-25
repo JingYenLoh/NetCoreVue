@@ -64,13 +64,15 @@ export default {
     return {
       sessionSynopsisName: '',
       isVisible: 'On',
-      isLoading: false
+      isLoading: false,
+      createdById: null
     }
   },
   async created () {
     try {
       let response = await axios.get(`/api/SessionSynopsis/${this.id}`)
       this.sessionSynopsisName = response.data.sessionSynopsisName
+      this.createdById = response.data.createdById
     } catch (err) {
       console.error(err)
     }
@@ -90,9 +92,8 @@ export default {
         response = await axios.put(`/api/SessionSynopsis/${this.id}`, {
           sessionSynopsisId: this.id,
           sessionSynopsisName: this.sessionSynopsisName,
-          // TODO:
-          createdById: 2,
-          updatedById: 2,
+          createdById: this.createdById,
+          updatedById: this.$store.state.userId,
           isVisible: this.isVisible === 'On'
         })
 

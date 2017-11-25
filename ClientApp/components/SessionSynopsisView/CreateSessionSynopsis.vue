@@ -75,9 +75,8 @@ export default {
       try {
         response = await axios.post('/api/SessionSynopsis', {
           sessionSynopsisName: this.sessionSynopsisName,
-          // TODO:
-          createdById: 2,
-          updatedById: 2,
+          createdById: this.$store.state.userId,
+          updatedById: this.$store.state.userId,
           isVisible: this.isVisible === 'On'
         })
 
