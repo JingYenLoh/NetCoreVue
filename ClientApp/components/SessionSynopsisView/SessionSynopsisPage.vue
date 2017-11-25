@@ -109,7 +109,8 @@ export default {
               } else {
                 throw new Error(response)
               }
-            }).then(() => axios.get('/api/SessionSynopsis'))
+            })
+            .then(() => axios.get('/api/SessionSynopsis'))
             .then(res => this.sessions = res.data)
             .then(() => this.$toast.open('Session synopsis deleted!'))
             .catch(err => console.error(err))

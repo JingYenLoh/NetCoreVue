@@ -10,8 +10,8 @@
       <p></p>
       <b>User Role information</b>
       <ul>
-        <li> The administrator user can logon to the system to manage class lesson records, account records, view instructor time sheet, manage class lesson schedules</li>
-        <li> The officer user can logon to the system to submit their time-in and time-out information, view their class schedules.</li>
+        <li>The administrator user can logon to the system to manage class lesson records, account records, view instructor time sheet, manage class lesson schedules</li>
+        <li>The officer user can logon to the system to submit their time-in and time-out information, view their class schedules.</li>
       </ul>
     </div>
   </div>
