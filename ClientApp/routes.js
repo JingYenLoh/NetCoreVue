@@ -1,4 +1,4 @@
-import HomePage from 'components/home-page'
+import HomePage from 'components/HomePage'
 import ErrorPage from 'components/ErrorView'
 import CoursePage from 'components/course-page'
 
