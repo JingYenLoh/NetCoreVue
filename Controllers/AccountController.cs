@@ -248,7 +248,11 @@ namespace NetCoreVue.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+
+            // return RedirectToAction(nameof(HomeController.Index), "Home");
+
+            // Instead of redirecting to Home, we return 200
+            return Ok();
         }
 
         [HttpPost]
