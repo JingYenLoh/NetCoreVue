@@ -1,10 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreVue.Data;
 using NetCoreVue.Models;
+using NetCoreVue.Models.CustomerAccountViewModels;
 
 namespace NetCoreVue.Controllers
 {
@@ -101,17 +102,40 @@ namespace NetCoreVue.Controllers
 
         // POST: api/CustomerAccounts
         [HttpPost]
-        public async Task<IActionResult> PostCustomerAccount([FromBody] CustomerAccount customerAccount)
+        public async Task<IActionResult> PostCustomerAccount([FromBody] CustomerAccountViewModel vm)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var customerAccount = new CustomerAccount
+            {
+                AccountName = vm.AccountName,
+                Comments    = vm.Comments,
+                IsVisible   = vm.IsVisible,
+                CreatedAt   = vm.CreatedAt,
+                CreatedById = vm.CreatedById,
+                UpdatedById = vm.UpdatedById,
+                UpdatedAt   = vm.UpdatedAt,
+            };
+
+            // TODO: Make this a transaction
             _context.CustomerAccounts.Add(customerAccount);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomerAccount", new { id = customerAccount.CustomerAccountId }, customerAccount);
+            var accountRate = new AccountRate
+            {
+                CustomerAccountId  = customerAccount.CustomerAccountId,
+                RatePerHour        = vm.RatePerHour,
+                EffectiveStartDate = vm.EffectiveStartDate,
+                EffectiveEndDate   = vm.EffectiveEndDate,
+            };
+
+            _context.AccountRates.Add(accountRate);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCustomerAccount", new { accId = customerAccount.CustomerAccountId, rateId = accountRate.AccountRateId }, customerAccount);
         }
 
         // DELETE: api/CustomerAccounts/5
