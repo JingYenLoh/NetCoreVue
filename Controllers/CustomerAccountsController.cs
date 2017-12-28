@@ -122,7 +122,10 @@ namespace NetCoreVue.Controllers
                 UpdatedAt   = vm.UpdatedAt,
             };
 
-            // TODO: Make this a transaction
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
             _context.CustomerAccounts.Add(customerAccount);
             await _context.SaveChangesAsync();
 
@@ -137,6 +140,7 @@ namespace NetCoreVue.Controllers
             _context.AccountRates.Add(accountRate);
             await _context.SaveChangesAsync();
 
+                    transaction.Commit();
             return CreatedAtAction("GetCustomerAccount", new { accId = customerAccount.CustomerAccountId, rateId = accountRate.AccountRateId }, customerAccount);
         }
                 catch (SqlException e)
