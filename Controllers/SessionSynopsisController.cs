@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -84,13 +85,17 @@ namespace NetCoreVue.Controllers
                 {
                     return NotFound();
                 }
-                else
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                if (e.InnerException.Message.Contains("SessionSynopsis_SessionSynopsisName_UniqueConstraint"))
                 {
-                    throw;
+                    return StatusCode(409, new { message = "A session synopsis with the same name already exists." });
                 }
+                throw;
             }
 
-            // return NoContent();
             return Ok(sessionSynopsis.SessionSynopsisName);
         }
 
@@ -103,7 +108,7 @@ namespace NetCoreVue.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.SessionSynopses.Add(sessionSynopsis);
+            await _context.SessionSynopses.AddAsync(sessionSynopsis);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSessionSynopsis", new { id = sessionSynopsis.SessionSynopsisId }, sessionSynopsis);

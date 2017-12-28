@@ -1,3 +1,5 @@
+using System;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -136,6 +138,17 @@ namespace NetCoreVue.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCustomerAccount", new { accId = customerAccount.CustomerAccountId, rateId = accountRate.AccountRateId }, customerAccount);
+        }
+                catch (SqlException e)
+                {
+                    if (e.InnerException.Message.Contains("CustomerAccount_AccountName_UniqueConstraint"))
+                    {
+                        var message = $"The customer account {vm.AccountName} already exists in the database.";
+                        return StatusCode(409, new { message });
+                    }
+                    return BadRequest(e.Message);
+                }
+            }
         }
 
         // DELETE: api/CustomerAccounts/5
