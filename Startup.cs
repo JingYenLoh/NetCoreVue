@@ -18,7 +18,6 @@ namespace NetCoreVue
     {
         public Startup(IHostingEnvironment env)
         {
-            // TODO: Potentially move to Program.cs
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
