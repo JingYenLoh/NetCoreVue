@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <nav class="navbar is-primary"
        role="navigation"
        aria-label="main navigation">
@@ -30,13 +30,11 @@
             <a class="navbar-link">Session</a>
             <div class="navbar-dropdown">
               <router-link class="navbar-item"
-                           :to="'/Sessions/Index'"
-                           exact-active-class="is-active">
+                           :to="'/Sessions/Index'">
                 Manage Session
               </router-link>
               <router-link class="navbar-item"
-                           :to="'/Sessions/Create'"
-                           exact-active-class="is-active">
+                           :to="'/Sessions/Create'">
                 Create Session
               </router-link>
             </div>
@@ -46,13 +44,11 @@
             <a class="navbar-link">Customer</a>
             <div class="navbar-dropdown">
               <router-link class="navbar-item"
-                           :to="'/Customers/Index'"
-                           exact-active-class="is-active">
+                           :to="'/Customers/Index'">
                 Manage Customers
               </router-link>
               <router-link class="navbar-item"
-                           :to="'/Customers/Create'"
-                           exact-active-class="is-active">
+                           :to="'/Customers/Create'">
                 Create Customer
               </router-link>
             </div>
