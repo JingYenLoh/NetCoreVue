@@ -1,6 +1,5 @@
 import HomePage from 'components/HomePage'
 import ErrorPage from 'components/ErrorView'
-import CoursePage from 'components/course-page'
 
 // Customer Account
 import CustomerHome from 'components/CustomerView/index'
@@ -26,12 +25,6 @@ export const routes = [
     component: HomePage,
     display: 'Home',
     style: 'home'
-  },
-  {
-    path: '/Courses',
-    component: CoursePage,
-    display: 'Courses',
-    style: 'graduation-cap'
   },
   {
     path: '/Customers',
