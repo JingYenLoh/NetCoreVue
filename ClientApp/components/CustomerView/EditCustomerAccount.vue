@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { get, put } from 'axios'
 import router from '../../router'
 
 export default {
@@ -92,10 +92,7 @@ export default {
   },
   async created () {
     try {
-      let response = await axios.get(`/api/CustomerAccounts/${this.id}`)
-
-      const data = response.data
-
+      const { data } = await get(`/api/CustomerAccounts/${this.id}`)
       this.customerAccName = data.accountName
       this.isVisible       = data.isVisible === true ? 'On': 'Off'
       this.comments        = data.comments
@@ -110,7 +107,7 @@ export default {
   },
   props: {
     id: {
-      type: [ Number, String ],
+      type: [Number, String],
       required: true
     }
   },
@@ -118,9 +115,8 @@ export default {
     async saveSynopsis () {
       this.isLoading = !this.isLoading
 
-      let response
       try {
-        response = await axios.put(`/api/CustomerAccounts/${this.id}`, {
+        const { status } = await put(`/api/CustomerAccounts/${this.id}`, {
           customerAccountId: this.id,
           accountName      : this.customerAccName,
           isVisible        : this.isVisible === 'On',
@@ -131,26 +127,26 @@ export default {
           updatedAt        : new Date()
         })
 
-        if (response.status === 204) {
+        if (status === 204) {
           this.$toast.open({
-            message: 'Session Synopsis successfully updated!',
+            message: 'Customer Account successfully updated!',
             type: 'is-success',
           })
-        } else {
-          // TODO: Use validation
-          this.$toast.open({
-            message: 'Failed to update Session Synopsis',
-            type: 'is-danger',
-          })
         }
-      } catch (err) {
-        const inDevelopment = process.env.NODE_ENV === 'development'
+      } catch ({ response }) {
+        let message
 
-        if (inDevelopment) {
-          console.error(err)
+        switch (response.status) {
+          case 400:
+            message = 'Please input all fields properly.'
+            break
+          case 404:
+            message = 'Unable to find the Account you are editing for.'
+            break
+          default:
+            message = 'Failed to update Customer Account.'
+            break
         }
-
-        const message = inDevelopment ? err.message : 'Failed to update Session Synopsis'
 
         this.$toast.open({
           message,

@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { get, put } from 'axios'
 import router from '../../router'
 
 export default {
@@ -85,11 +85,9 @@ export default {
   },
   async created () {
     try {
-      const response = await axios.get(`/api/AccountRates/${this.id}`)
+      const { status, data } = await get(`/api/AccountRates/${this.id}`)
 
-      if (response.status === 200) {
-        const data = response.data
-
+      if (status === 200) {
         this.accountRateId     = data.accountRateId
         this.customerAccountId = data.customerAccountId
         this.ratePerHour       = data.ratePerHour
@@ -110,9 +108,8 @@ export default {
     async editRate () {
       this.isLoading = !this.isLoading
 
-      let response
       try {
-        response = await axios.put(`/api/AccountRates/${this.accountRateId}`, {
+        const { status } = await put(`/api/AccountRates/${this.accountRateId}`, {
           accountRateId     : this.accountRateId,
           customerAccountId : this.customerAccountId,
           ratePerHour       : this.ratePerHour,
@@ -120,25 +117,31 @@ export default {
           effectiveEndDate  : this.endDate
         })
 
-        if (response.status === 200) {
+        if (status === 200) {
           this.$toast.open({
             message: 'Account rate successfully edited!',
             type: 'is-success',
           })
         } else {
           this.$toast.open({
-            message: 'Failed to edited Account rate',
+            message: 'Failed to edit Account rate',
             type: 'is-danger',
           })
         }
-      } catch (err) {
-        const inDevelopment = process.env.NODE_ENV === 'development'
+      } catch ({ response }) {
+        let message
 
-        if (inDevelopment) {
-          console.error(err)
+        switch (response.status) {
+          case 400:
+            message = 'Please fill in all fields properly.'
+            break
+          case 404:
+            message = 'Account rate not found!'
+            break
+          default:
+            message = 'Failed to edit Account rate'
+            break
         }
-
-        const message = inDevelopment ? err.message : 'Failed to create Customer Account'
 
         this.$toast.open({
           message,

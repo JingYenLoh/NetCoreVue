@@ -56,13 +56,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { post } from 'axios'
 import router from '../../router'
 
 export default {
   data () {
     return {
-      sessionSynopsisName: null,
+      sessionSynopsisName: '',
       isVisible: 'On',
       isLoading: false,
     }
@@ -71,35 +71,31 @@ export default {
     async saveSynopsis () {
       this.isLoading = !this.isLoading
 
-      let response
       try {
-        response = await axios.post('/api/SessionSynopsis', {
+        const { status } = await post('/api/SessionSynopsis', {
           sessionSynopsisName: this.sessionSynopsisName,
-          createdById: this.$store.state.userId,
-          updatedById: this.$store.state.userId,
-          isVisible: this.isVisible === 'On'
+          createdById        : this.$store.state.userId,
+          updatedById        : this.$store.state.userId,
+          isVisible          : this.isVisible === 'On'
         })
 
-        if (response.status === 201) {
+        if (status === 201) {
           this.$toast.open({
             message: 'Session Synopsis successfully created!',
             type: 'is-success'
           })
-        } else {
-          // TODO: Use validation
-          this.$toast.open({
-            message: 'Failed to create Session Synopsis',
-            type: 'is-danger'
-          })
         }
-      } catch (err) {
-        const inDevelopment = process.env.NODE_ENV === 'development'
+      } catch ({ response }) {
+        let message
 
-        if (inDevelopment) {
-          console.error(err)
+        switch (response.status) {
+          case 409:
+            message = 'A session synopsis with the same name already exists.'
+            break
+          default:
+            message = 'Failed to create Session Synopsis'
+            break
         }
-
-        const message = inDevelopment ? err.message : 'Failed to create Session Synopsis'
 
         this.$toast.open({
           message,

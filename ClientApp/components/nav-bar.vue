@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <nav class="navbar is-primary"
        role="navigation"
        aria-label="main navigation">
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { create } from 'axios'
 
 export default {
   data () {
@@ -91,15 +91,17 @@ export default {
       try {
         const loadingComponent = this.$loading.open()
 
-        const token = document.getElementById('anti-forgery').firstChild.getAttribute('value')
+        const token = document.getElementById('anti-forgery')
+          .firstChild
+          .getAttribute('value')
 
-        const instance = axios.create({
+        const instance = create({
           headers: { 'RequestVerificationToken': token }
         })
 
-        const response = await instance.post('/Account/Logout')
+        const { status } = await instance.post('/Account/Logout')
 
-        if (response.status === 200) {
+        if (status === 200) {
           window.location = '/Account/Login'
         }
       } catch (err) {
@@ -111,7 +113,3 @@ export default {
   }
 }
 </script>
-
-<<style lang="scss" scoped>
-
-</style>

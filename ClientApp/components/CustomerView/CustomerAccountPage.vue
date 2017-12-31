@@ -79,7 +79,7 @@
   </div>
 </template>
 
-<<script>
+<script>
 import axios from 'axios'
 
 export default {
@@ -92,8 +92,8 @@ export default {
   },
   async created () {
     try {
-      let response = await axios.get('/api/CustomerAccounts')
-      this.customers = response.data
+      const { data } = await axios.get('/api/CustomerAccounts')
+      this.customers = data
     } catch (err) {
       console.error(err)
     }
@@ -111,14 +111,14 @@ export default {
         hasIcon: true,
         onConfirm: () => {
           axios.delete(`/api/CustomerAccounts/${id}`)
-            .then(response => {
-              if (response.status === 200) {
+            .then(({ status }) => {
+              if (status === 200) {
                 return true
               } else {
                 throw new Error(response)
               }
             }).then(() => axios.get('/api/CustomerAccounts'))
-            .then(res => this.customers = res.data)
+            .then(({ data }) => this.customers = data)
             .then(() => this.$toast.open('Customer Account deleted!'))
             .catch(err => console.error(err))
         }

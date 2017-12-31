@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { post } from 'axios'
 import router from '../../router'
 
 export default {
@@ -121,7 +121,7 @@ export default {
       endDate: null,
     }
   },
-  async created () {
+  created () {
     try {
       this.startDate = new Date()
     } catch (err) {
@@ -132,19 +132,21 @@ export default {
     async createAccount () {
       this.isLoading = !this.isLoading
 
-      let response
       try {
-        response = await axios.post('/api/CustomerAccounts', {
-          accountName: this.customerAccName,
-          isVisible: this.isVisible === 'On',
-          comments: this.comments,
-          createdById: this.$store.state.userId,
-          createdAt: new Date(),
-          updatedById: this.$store.state.userId,
-          updatedAt: new Date()
+        const { status } = await post('/api/CustomerAccounts', {
+          accountName       : this.customerAccName,
+          comments          : this.comments,
+          isVisible         : this.isVisible === 'On',
+          createdAt         : new Date(),
+          createdById       : this.$store.state.userId,
+          updatedAt         : new Date(),
+          updatedById       : this.$store.state.userId,
+          ratePerHour       : this.ratePerHr,
+          effectiveStartDate: this.startDate,
+          effectiveEndDate  : this.endDate
         })
 
-        if (response.status === 201) {
+        if (status === 201) {
           this.$toast.open({
             message: 'Customer Account successfully created!',
             type: 'is-success',
@@ -156,15 +158,7 @@ export default {
             type: 'is-danger',
           })
         }
-      } catch (err) {
-        const inDevelopment = process.env.NODE_ENV === 'development'
-
-        if (inDevelopment) {
-          console.error(err)
-        }
-
-        const message = inDevelopment ? err.message : 'Failed to create Customer Account'
-
+      } catch ({ message }) {
         this.$toast.open({
           message,
           type: 'is-danger',
