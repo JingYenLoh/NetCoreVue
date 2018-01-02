@@ -14,7 +14,7 @@
                    class="input"
                    :class="{ 'is-danger': errors.has('ratePerHr') }"
                    :placeholder="ratePerHr"
-                   v-validate="'required|min_value:0.01|decimal:2'"
+                   v-validate="'required|min_value:0.01|max_value:9999.99|decimal:2'"
                    v-model="ratePerHr">
             <p v-show="errors.has('ratePerHr')"
                class="help is-danger">
@@ -47,6 +47,7 @@
             <button type="submit"
                     class="button is-primary"
                     :class="{ 'is-loading': isLoading }"
+                    :disabled="errors.any()"
                     @click="createRate">
               Add
             </button>
@@ -65,7 +66,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { get, post } from 'axios'
 import router from '../../router'
 
 export default {
@@ -81,16 +82,14 @@ export default {
   },
   async created () {
     try {
-      const accountResponse = await axios.get(`/api/CustomerAccounts/${this.id}`)
-      const minDateResponse = await axios.get(`/api/AccountRates/LatestDate/${this.id}`)
+      const { status, data } = await get(`/api/CustomerAccounts/${this.id}`)
+      const minDateResponse = await get(`/api/AccountRates/LatestDate/${this.id}`)
 
-      if (accountResponse.status === 200 && minDateResponse.status === 200) {
-        this.accountName = accountResponse.data.accountName
+      if (status === 200 && minDateResponse.status === 200) {
+        this.accountName  = data.accountName
         this.minStartDate = new Date(minDateResponse.data)
       }
-      // this.startDate = Math.max(this.minStartDate, new Date())
       this.startDate = this.minStartDate > new Date() ? this.minStartDate : new Date()
-      this.endDate = this.startDate
     } catch (err) {
       console.error(err)
     }
@@ -107,34 +106,30 @@ export default {
 
       let response
       try {
-        // TODO:
-        response = await axios.post('/api/AccountRates', {
+        const { status } = await post('/api/AccountRates', {
           customerAccountId : this.id,
           ratePerHour       : this.ratePerHr,
           effectiveStartDate: this.startDate,
           effectiveEndDate  : this.endDate
         })
 
-        if (response.status === 201) {
+        if (status === 201) {
           this.$toast.open({
             message: 'Account rate successfully created!',
             type: 'is-success',
           })
-        } else {
-          // TODO: Use validation
-          this.$toast.open({
-            message: 'Failed to create Account rate',
-            type: 'is-danger',
-          })
         }
-      } catch (err) {
-        const inDevelopment = process.env.NODE_ENV === 'development'
+      } catch ({ response }) {
+        let message
 
-        if (inDevelopment) {
-          console.error(err)
+        switch (response.status) {
+          case 400:
+            message = 'Please fill in the account rate data properly'
+            break
+          default:
+            message = 'Failed to create Account rate'
+            break
         }
-
-        const message = inDevelopment ? err.message : 'Failed to create Account rate'
 
         this.$toast.open({
           message,

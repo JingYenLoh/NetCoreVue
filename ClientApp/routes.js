@@ -1,6 +1,5 @@
 import HomePage from 'components/HomePage'
 import ErrorPage from 'components/ErrorView'
-import CoursePage from 'components/course-page'
 
 // Customer Account
 import CustomerHome from 'components/CustomerView/index'
@@ -14,6 +13,11 @@ import SessionPage from 'components/SessionSynopsisView/SessionSynopsisPage'
 import EditSession from 'components/SessionSynopsisView/EditSessionSynopsis'
 import CreateSession from 'components/SessionSynopsisView/CreateSessionSynopsis'
 
+// User Manager
+import UserHome from 'components/UserManagerView/index'
+import UserPage from 'components/UserManagerView/UserManagerPage'
+import EditUser from 'components/UserManagerView/EditUser'
+
 // Account Rates
 import RateHome from 'components/AccountRatesView/index'
 import ManageRate from 'components/AccountRatesView/ManageRate'
@@ -26,12 +30,6 @@ export const routes = [
     component: HomePage,
     display: 'Home',
     style: 'home'
-  },
-  {
-    path: '/Courses',
-    component: CoursePage,
-    display: 'Courses',
-    style: 'graduation-cap'
   },
   {
     path: '/Customers',
@@ -76,6 +74,23 @@ export const routes = [
         path: 'Edit/:id',
         name: 'editSynopsis',
         component: EditSession,
+        props: true
+      }
+    ]
+  },
+  {
+    path: '/Users',
+    component: UserHome,
+    display: 'Manage Users',
+    children: [
+      {
+        path: 'Index',
+        component: UserPage
+      },
+      {
+        path: 'Edit/:id',
+        name: 'editUser',
+        component: EditUser,
         props: true
       }
     ]

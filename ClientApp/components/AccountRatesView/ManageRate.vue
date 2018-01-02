@@ -59,7 +59,7 @@
 
 <script>
 import Vue from 'vue'
-import axios from 'axios'
+import { get } from 'axios'
 import AccountError from './Error'
 
 Vue.component('error', AccountError)
@@ -77,10 +77,10 @@ export default {
   },
   async created () {
     try {
-      const response = await axios.get(`/api/AccountRates/CustomerAccountRates/${this.id}`)
+      const { status, data } = await get(`/api/AccountRates/CustomerAccountRates/${this.id}`)
 
-      if (response.status === 200) {
-        this.accountRates = response.data
+      if (status === 200) {
+        this.accountRates = data
       } else {
         this.$router.push({ path: '/Error' })
       }

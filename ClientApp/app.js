@@ -6,8 +6,6 @@ import router from './router'
 import store from './store'
 import { sync } from 'vuex-router-sync'
 import App from './components/App.vue'
-// Styles
-import 'buefy/lib/buefy.css'
 
 Vue.use(Buefy, {
   defaultIconPack: 'fa'

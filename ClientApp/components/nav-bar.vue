@@ -30,13 +30,11 @@
             <a class="navbar-link">Session</a>
             <div class="navbar-dropdown">
               <router-link class="navbar-item"
-                           :to="'/Sessions/Index'"
-                           exact-active-class="is-active">
+                           :to="'/Sessions/Index'">
                 Manage Session
               </router-link>
               <router-link class="navbar-item"
-                           :to="'/Sessions/Create'"
-                           exact-active-class="is-active">
+                           :to="'/Sessions/Create'">
                 Create Session
               </router-link>
             </div>
@@ -46,13 +44,11 @@
             <a class="navbar-link">Customer</a>
             <div class="navbar-dropdown">
               <router-link class="navbar-item"
-                           :to="'/Customers/Index'"
-                           exact-active-class="is-active">
+                           :to="'/Customers/Index'">
                 Manage Customers
               </router-link>
               <router-link class="navbar-item"
-                           :to="'/Customers/Create'"
-                           exact-active-class="is-active">
+                           :to="'/Customers/Create'">
                 Create Customer
               </router-link>
             </div>
@@ -82,7 +78,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { create } from 'axios'
 
 export default {
   data () {
@@ -95,15 +91,17 @@ export default {
       try {
         const loadingComponent = this.$loading.open()
 
-        const token = document.getElementById('anti-forgery').firstChild.getAttribute('value')
+        const token = document.getElementById('anti-forgery')
+          .firstChild
+          .getAttribute('value')
 
-        const instance = axios.create({
+        const instance = create({
           headers: { 'RequestVerificationToken': token }
         })
 
-        const response = await instance.post('/Account/Logout')
+        const { status } = await instance.post('/Account/Logout')
 
-        if (response.status === 200) {
+        if (status === 200) {
           window.location = '/Account/Login'
         }
       } catch (err) {
@@ -115,7 +113,3 @@ export default {
   }
 }
 </script>
-
-<<style lang="scss" scoped>
-
-</style>

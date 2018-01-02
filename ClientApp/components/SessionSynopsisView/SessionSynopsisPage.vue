@@ -5,7 +5,7 @@
 
       <b-table :data="sessions"
                :striped="true"
-               :paginated="isPaginated"
+               paginated
                :per-page="perPage"
                :default-sort-direction="defaultSortDirection"
                :selected.sync="selected"
@@ -72,7 +72,6 @@ export default {
   data () {
     return {
       sessions: [],
-      isPaginated: true,
       defaultSortDirection: 'asc',
       perPage: 10,
       selected: null
@@ -80,9 +79,9 @@ export default {
   },
   async created () {
     try {
-      const response = await axios.get('/api/SessionSynopsis')
-      if (!response.redirected) {
-        this.sessions = response.data
+      const { redirected, data } = await axios.get('/api/SessionSynopsis')
+      if (!redirected) {
+        this.sessions = data
       } else {
         this.$router.push({ path: '/Error' })
       }
@@ -91,10 +90,10 @@ export default {
     }
   },
   methods: {
-    sessionEdit(id) {
+    sessionEdit (id) {
       router.push({ name: 'Edit', params: id })
     },
-    confirmDelete(id) {
+    confirmDelete (id) {
       this.$dialog.confirm({
         title: 'Deleting synopsis',
         message: 'Are you sure you want to <b>delete</b> this session synopsis? This action cannot be undone.',
@@ -103,15 +102,15 @@ export default {
         hasIcon: true,
         onConfirm: () => {
           axios.delete(`/api/SessionSynopsis/${id}`)
-            .then(response => {
-              if (response.status === 200) {
+            .then(({ status }) => {
+              if (status === 200) {
                 return true
               } else {
                 throw new Error(response)
               }
             })
             .then(() => axios.get('/api/SessionSynopsis'))
-            .then(res => this.sessions = res.data)
+            .then(({ data }) => this.sessions = data)
             .then(() => this.$toast.open('Session synopsis deleted!'))
             .catch(err => console.error(err))
         }

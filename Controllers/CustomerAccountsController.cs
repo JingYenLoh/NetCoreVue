@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NetCoreVue.Data;
 using NetCoreVue.Models;
 using NetCoreVue.Models.CustomerAccountViewModels;
@@ -17,10 +18,14 @@ namespace NetCoreVue.Controllers
     public class CustomerAccountsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger _logger;
 
-        public CustomerAccountsController(ApplicationDbContext context)
+        public CustomerAccountsController(
+            ApplicationDbContext context,
+            ILogger<CustomerAccountsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/CustomerAccounts
@@ -126,23 +131,23 @@ namespace NetCoreVue.Controllers
             {
                 try
                 {
-            _context.CustomerAccounts.Add(customerAccount);
-            await _context.SaveChangesAsync();
+                    _context.CustomerAccounts.Add(customerAccount);
+                    await _context.SaveChangesAsync();
 
-            var accountRate = new AccountRate
-            {
-                CustomerAccountId  = customerAccount.CustomerAccountId,
-                RatePerHour        = vm.RatePerHour,
-                EffectiveStartDate = vm.EffectiveStartDate,
-                EffectiveEndDate   = vm.EffectiveEndDate,
-            };
+                    var accountRate = new AccountRate
+                    {
+                        CustomerAccountId  = customerAccount.CustomerAccountId,
+                        RatePerHour        = vm.RatePerHour,
+                        EffectiveStartDate = vm.EffectiveStartDate,
+                        EffectiveEndDate   = vm.EffectiveEndDate,
+                    };
 
-            _context.AccountRates.Add(accountRate);
-            await _context.SaveChangesAsync();
+                    _context.AccountRates.Add(accountRate);
+                    await _context.SaveChangesAsync();
 
                     transaction.Commit();
-            return CreatedAtAction("GetCustomerAccount", new { accId = customerAccount.CustomerAccountId, rateId = accountRate.AccountRateId }, customerAccount);
-        }
+                    return CreatedAtAction("GetCustomerAccount", new { accId = customerAccount.CustomerAccountId, rateId = accountRate.AccountRateId }, customerAccount);
+                }
                 catch (SqlException e)
                 {
                     if (e.InnerException.Message.Contains("CustomerAccount_AccountName_UniqueConstraint"))
