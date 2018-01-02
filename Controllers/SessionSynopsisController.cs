@@ -1,7 +1,8 @@
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreVue.Data;
@@ -15,10 +16,12 @@ namespace NetCoreVue.Controllers
     public class SessionSynopsisController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SessionSynopsisController(ApplicationDbContext context)
+        public SessionSynopsisController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/SessionSynopsis
@@ -110,8 +113,20 @@ namespace NetCoreVue.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.SessionSynopses.AddAsync(sessionSynopsis);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.SessionSynopses.Add(sessionSynopsis);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                if (e.InnerException.Message.Contains("SessionSynopsis_SessionSynopsisName_UniqueConstraint"))
+                {
+                    var response = new { message = "A session synopsis with the same name already exists." };
+                    return StatusCode(409, response);
+                }
+                throw;
+            }
 
             return CreatedAtAction("GetSessionSynopsis", new { id = sessionSynopsis.SessionSynopsisId }, sessionSynopsis);
         }
