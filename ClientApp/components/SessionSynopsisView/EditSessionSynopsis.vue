@@ -12,7 +12,7 @@
                    :class="{ 'input': true, 'is-danger': errors.has('synopsis') }"
                    type="text"
                    :placeholder="sessionSynopsisName"
-                   v-validate="'required|min:1|max:100'"
+                   v-validate="'alpha_num_spaces|required|min:1|max:100'"
                    v-model="data.sessionSynopsisName">
             <p v-show="errors.has('synopsis')"
                class="help is-danger">

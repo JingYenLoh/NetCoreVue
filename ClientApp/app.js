@@ -7,10 +7,15 @@ import store from './store'
 import { sync } from 'vuex-router-sync'
 import App from './components/App.vue'
 
+// Validation
+import { alphaNumSpaces } from './helpers/validators'
+import VeeValidate from 'vee-validate'
+
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
 })
 
+VeeValidate.Validator.extend('alpha_num_spaces', alphaNumSpaces)
 Vue.use(VeeValidate)
 
 Vue.prototype.$http = axios

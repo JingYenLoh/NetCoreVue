@@ -7,8 +7,8 @@
         <div class="field">
           <label for="synopsis"
                  class="label">Session Synopsis Name</label>
-          <p class="control">
-            <input v-validate="'required|min:1|max:100|alpha_spaces'"
+          <div class="control">
+            <input v-validate="'alpha_num_spaces|required|min:1|max:100'"
                    name="synopsis"
                    class="input"
                    :class="{ 'is-danger': errors.has('synopsis') }"
@@ -19,7 +19,7 @@
                class="help is-danger">
               {{ errors.first('synopsis') }}
             </p>
-          </p>
+          </div>
         </div>
 
         <b-field label="Visibility">
