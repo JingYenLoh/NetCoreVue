@@ -14,7 +14,7 @@
                    class="input"
                    :class="{ 'is-danger': errors.has('ratePerHr') }"
                    :placeholder="ratePerHr"
-                   v-validate="'required|min_value:0.01|decimal:2'"
+                   v-validate="'required|min_value:0.01|max_value:9999.99|decimal:2'"
                    v-model="ratePerHr">
             <p v-show="errors.has('ratePerHr')"
                class="help is-danger">
@@ -47,6 +47,7 @@
             <button type="submit"
                     class="button is-primary"
                     :class="{ 'is-loading': isLoading }"
+                    :disabled="errors.any()"
                     @click="createRate">
               Add
             </button>

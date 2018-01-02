@@ -13,7 +13,7 @@
                    type="text"
                    :placeholder="sessionSynopsisName"
                    v-validate="'required|min:1|max:100'"
-                   v-model="sessionSynopsisName">
+                   v-model="data.sessionSynopsisName">
             <p v-show="errors.has('synopsis')"
                class="help is-danger">
               {{ errors.first('synopsis') }}
@@ -42,6 +42,7 @@
           </p>
           <p class="control">
             <button class="button is-danger"
+                    :disabled="errors.any()"
                     @click="cancel">
               Cancel
             </button>
@@ -66,7 +67,7 @@ export default {
       isLoading: false,
       data: {
         sessionSynopsisName: ''
-    }
+      }
     }
   },
   async created () {
@@ -123,4 +124,3 @@ export default {
   }
 }
 </script>
-

@@ -38,6 +38,7 @@
             <button type="submit"
                     class="button is-primary"
                     :class="{ 'is-loading': isLoading }"
+                    :disabled="errors.any()"
                     @click="saveSynopsis">
               Save
             </button>
@@ -111,4 +112,3 @@ export default {
   }
 }
 </script>
-
