@@ -6,18 +6,18 @@
         <h1 class="subtitle">General Information</h1>
 
         <div class="field">
-          <label for="accountName" class="label">Account Name</label>
+          <label for="accountName"
+                 class="label">Account Name</label>
           <p class="control">
-            <input
-              type="text"
-              name="accountName"
-              class="input"
-              :class="{ 'is-danger': errors.has('accountName') }"
-              placeholder="customerAccName"
-              v-validate="'required|min:1|max:100'"
-              v-model="customerAccName"
-            >
-            <span v-show="errors.has('accountName')" class="help is-danger">
+            <input type="text"
+                   name="accountName"
+                   class="input"
+                   :class="{ 'is-danger': errors.has('accountName') }"
+                   placeholder="customerAccName"
+                   v-validate="'required|min:1|max:100'"
+                   v-model="customerAccName">
+            <span v-show="errors.has('accountName')"
+                  class="help is-danger">
               {{ errors.first('accountName') }}
             </span>
           </p>
@@ -25,7 +25,9 @@
 
         <b-field label="Visibility">
           <div class="field">
-            <b-switch v-model="isVisible" true-value="On" false-value="Off">
+            <b-switch v-model="isVisible"
+                      true-value="On"
+                      false-value="Off">
               {{ isVisible }}
             </b-switch>
           </div>
@@ -34,33 +36,33 @@
         <b-field label="Comments"></b-field>
         <!-- This isn't inside the previous b-field because of a Bulma bug -->
         <b-field>
-          <textarea
-            name="comments"
-            cols="30"
-            rows="3"
-            :class="{ 'textarea': true, 'is-danger': errors.has('comments') }"
-            v-validate="'max:4000'"
-            v-model="comments"
-          >
+          <textarea name="comments"
+                    cols="40"
+                    rows="10"
+                    :class="{ 'textarea': true, 'is-danger': errors.has('comments') }"
+                    v-validate="'max:4000'"
+                    v-model="comments">
           </textarea>
         </b-field>
-        <span v-show="errors.has('comments')" class="help is-danger">
+        <span v-show="errors.has('comments')"
+              class="help is-danger">
           {{ errors.first('comments') }}
         </span>
 
-        <b-field grouped group-multiline>
+        <b-field grouped
+                 group-multiline>
           <p class="control">
-            <button
-              type="submit"
-              class="button is-primary"
-              :class="{ 'is-loading': isLoading }"
-              @click="saveSynopsis"
-            >
+            <button type="submit"
+                    class="button is-primary"
+                    :class="{ 'is-loading': isLoading }"
+                    :disabled="errors.any()"
+                    @click="saveSynopsis">
               Save
             </button>
           </p>
           <p class="control">
-            <button class="button is-danger" @click="cancel">
+            <button class="button is-danger"
+                    @click="cancel">
               Cancel
             </button>
           </p>

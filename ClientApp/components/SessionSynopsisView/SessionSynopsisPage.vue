@@ -5,7 +5,7 @@
 
       <b-table :data="sessions"
                :striped="true"
-               :paginated="isPaginated"
+               paginated
                :per-page="perPage"
                :default-sort-direction="defaultSortDirection"
                :selected.sync="selected"
@@ -72,7 +72,6 @@ export default {
   data () {
     return {
       sessions: [],
-      isPaginated: true,
       defaultSortDirection: 'asc',
       perPage: 10,
       selected: null

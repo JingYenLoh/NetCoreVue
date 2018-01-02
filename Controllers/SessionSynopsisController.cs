@@ -1,4 +1,4 @@
-﻿using System.Data.SqlClient;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -30,11 +30,11 @@ namespace NetCoreVue.Controllers
             .Include(ss => ss.CreatedBy)
             .Select(ss => new
             {
-                sessionSynopsisId = ss.SessionSynopsisId,
+                sessionSynopsisId   = ss.SessionSynopsisId,
                 sessionSynopsisName = ss.SessionSynopsisName,
-                createdBy = ss.CreatedBy.FullName,
-                isVisible = ss.IsVisible,
-                updatedBy = ss.UpdatedBy.FullName
+                createdBy           = ss.CreatedBy.FullName,
+                isVisible           = ss.IsVisible,
+                updatedBy           = ss.UpdatedBy.FullName
             });
 
             return Ok(query);
@@ -49,7 +49,8 @@ namespace NetCoreVue.Controllers
                 return BadRequest(ModelState);
             }
 
-            var sessionSynopsis = await _context.SessionSynopses.SingleOrDefaultAsync(m => m.SessionSynopsisId == id);
+            var sessionSynopsis = await _context.SessionSynopses
+                .SingleOrDefaultAsync(m => m.SessionSynopsisId == id);
 
             if (sessionSynopsis == null)
             {
@@ -91,7 +92,8 @@ namespace NetCoreVue.Controllers
             {
                 if (e.InnerException.Message.Contains("SessionSynopsis_SessionSynopsisName_UniqueConstraint"))
                 {
-                    return StatusCode(409, new { message = "A session synopsis with the same name already exists." });
+                    var response = new { message = "A session synopsis with the same name already exists." };
+                    return StatusCode(409, response);
                 }
                 throw;
             }

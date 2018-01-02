@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { get, put } from 'axios'
 import router from '../../router'
 
 // Custom validation
@@ -62,24 +62,24 @@ import { sessionSynopsisRule } from '../../helpers/validators'
 export default {
   data () {
     return {
-      sessionSynopsisName: '',
       isVisible: 'On',
       isLoading: false,
-      createdById: null
+      data: {
+        sessionSynopsisName: ''
+    }
     }
   },
   async created () {
     try {
-      let response = await axios.get(`/api/SessionSynopsis/${this.id}`)
-      this.sessionSynopsisName = response.data.sessionSynopsisName
-      this.createdById = response.data.createdById
+      const { data } = await get(`/api/SessionSynopsis/${this.id}`)
+      this.data = data
     } catch (err) {
       console.error(err)
     }
   },
   props: {
     id: {
-      type: [ Number, String ],
+      type: [Number, String],
       required: true
     }
   },
@@ -87,40 +87,32 @@ export default {
     async editSynopsis () {
       this.isLoading = !this.isLoading
 
-      let response
       try {
-        response = await axios.put(`/api/SessionSynopsis/${this.id}`, {
-          sessionSynopsisId: this.id,
-          sessionSynopsisName: this.sessionSynopsisName,
-          createdById: this.createdById,
+        const { status } = await put(`/api/SessionSynopsis/${this.id}`, {
+          ...this.data,
           updatedById: this.$store.state.userId,
-          isVisible: this.isVisible === 'On'
+          isVisible  : this.isVisible === 'On'
         })
 
-        if (response.status === 200) {
+        if (status === 200) {
           this.$toast.open({
             message: 'Session Synopsis successfully updated!',
-            type: 'is-success',
-          })
-        } else {
-          this.$toast.open({
-            message: 'Failed to update Session Synopsis',
-            type: 'is-danger',
+            type   : 'is-success'
           })
         }
-      } catch (err) {
-        const inDevelopment = process.env.NODE_ENV === 'development'
+      } catch ({ response }) {
+        let message
 
-        if (inDevelopment) {
-          console.error(err)
+        switch (response.status) {
+          case 409:
+            message = 'A session synopsis with the same name already exists.'
+            break
+          default:
+            message = 'Failed to update Session Synopsis'
+            break
         }
 
-        const message = inDevelopment ? err.message : 'Failed to update Session Synopsis'
-
-        this.$toast.open({
-          message,
-          type: 'is-danger',
-        })
+        this.$toast.open({ message, type: 'is-danger' })
       } finally {
         this.isLoading = !this.isLoading
       }
@@ -132,6 +124,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>

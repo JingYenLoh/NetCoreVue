@@ -6,58 +6,54 @@
         <h1 class="title is-spaced">Edit Account Rate</h1>
 
         <div class="field">
-          <label for="ratePerHr" class="label">Rate per Hour</label>
+          <label for="ratePerHr"
+                 class="label">Rate per Hour</label>
           <p class="control">
-            <input
-              type="number"
-              name="ratePerHr"
-              class="input"
-              :class="{ 'is-danger': errors.has('ratePerHr') }"
-              placeholder=""
-              v-validate="'required|min_value:0.01|decimal:2'"
-              v-model="ratePerHour"
-            >
-            <p v-show="errors.has('ratePerHr')" class="help is-danger">
+            <input type="number"
+                   name="ratePerHr"
+                   class="input"
+                   :class="{ 'is-danger': errors.has('ratePerHr') }"
+                   placeholder=""
+                   v-validate="'required|min_value:0.01|decimal:2'"
+                   v-model="ratePerHour" />
+            <p v-show="errors.has('ratePerHr')"
+               class="help is-danger">
               {{ errors.first('ratePerHr') }}
             </p>
           </p>
         </div>
 
         <b-field label="Effective Start Date">
-          <b-datepicker
-            icon="calendar"
-            :min-date="today"
-            placeholder="MM/DD/YYYY"
-            :readonly="false"
-            v-model="startDate"
-          >
+          <b-datepicker icon="calendar"
+                        :min-date="today"
+                        placeholder="MM/DD/YYYY"
+                        :readonly="false"
+                        v-model="startDate">
           </b-datepicker>
         </b-field>
 
         <b-field label="Effective End Date">
-          <b-datepicker
-            icon="calendar"
-            :min-date="startDate"
-            placeholder="MM/DD/YYYY"
-            :readonly="false"
-            v-model="endDate"
-          >
+          <b-datepicker icon="calendar"
+                        :min-date="startDate"
+                        placeholder="MM/DD/YYYY"
+                        :readonly="false"
+                        v-model="endDate">
           </b-datepicker>
         </b-field>
 
-        <b-field grouped group-multiline>
+        <b-field grouped
+                 group-multiline>
           <p class="control">
-            <button
-              type="submit"
-              class="button is-primary"
-              :class="{ 'is-loading': isLoading }"
-              @click="editRate"
-            >
+            <button type="submit"
+                    class="button is-primary"
+                    :class="{ 'is-loading': isLoading }"
+                    @click="editRate">
               Save
             </button>
           </p>
           <p class="control">
-            <button class="button is-danger" @click="cancel">
+            <button class="button is-danger"
+                    @click="cancel">
               Cancel
             </button>
           </p>
@@ -162,7 +158,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -7,8 +7,10 @@
 
         <div class="field">
           <label for="accountName"
-                 class="label">Account Name</label>
-          <p class="control">
+                 class="label">
+            Account Name
+          </label>
+          <div class="control">
             <input type="text"
                    name="accountName"
                    :class="{ 'input': true, 'is-danger': errors.has('accountName') }"
@@ -19,7 +21,7 @@
                class="help is-danger">
               {{ errors.first('accountName') }}
             </p>
-          </p>
+          </div>
         </div>
 
         <b-field label="Visibility">
@@ -56,7 +58,7 @@
                  type="number"
                  :class="{ 'input': true, 'is-danger': errors.has('rate') }"
                  placeholder="e.g. 100"
-                 v-validate="'decimal:2|min_value:0.01'"
+                 v-validate="'decimal:2|min_value:0.01|max_value:9999.99'"
                  v-model="ratePerHr">
           <span v-show="errors.has('rate')"
                 class="help is-dangers">
