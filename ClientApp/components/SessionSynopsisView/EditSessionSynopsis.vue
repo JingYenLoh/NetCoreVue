@@ -7,7 +7,7 @@
         <div class="field">
           <label for="synopsis"
                  class="label">Session Synopsis Name</label>
-          <p class="control">
+          <div class="control">
             <input name="synopsis"
                    :class="{ 'input': true, 'is-danger': errors.has('synopsis') }"
                    type="text"
@@ -18,7 +18,7 @@
                class="help is-danger">
               {{ errors.first('synopsis') }}
             </p>
-          </p>
+          </div>
         </div>
 
         <b-field label="Visibility">
@@ -36,13 +36,13 @@
             <button type="submit"
                     class="button is-primary"
                     v-bind:class="{ 'is-loading': isLoading }"
+                    :disabled="errors.any()"
                     @click="editSynopsis">
               Save
             </button>
           </p>
           <p class="control">
             <button class="button is-danger"
-                    :disabled="errors.any()"
                     @click="cancel">
               Cancel
             </button>
@@ -57,13 +57,9 @@
 import { get, put } from 'axios'
 import router from '../../router'
 
-// Custom validation
-import { sessionSynopsisRule } from '../../helpers/validators'
-
 export default {
   data () {
     return {
-      isVisible: 'On',
       isLoading: false,
       data: {
         sessionSynopsisName: ''
@@ -91,8 +87,7 @@ export default {
       try {
         const { status } = await put(`/api/SessionSynopsis/${this.id}`, {
           ...this.data,
-          updatedById: this.$store.state.userId,
-          isVisible  : this.isVisible === 'On'
+          updatedById: this.$store.state.userId
         })
 
         if (status === 200) {
@@ -120,6 +115,11 @@ export default {
     },
     cancel () {
       router.go(-1)
+    }
+  },
+  computed: {
+    isVisible () {
+      return this.data.isVisible === true ? 'On': 'Off'
     }
   }
 }
