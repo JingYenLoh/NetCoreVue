@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav-bar/>
+    <nav-bar :name="fullName" />
     <router-view/>
   </div>
 </template>
@@ -15,10 +15,12 @@ Vue.component('nav-bar', NavBar)
 export default {
   data () {
     return {
+      fullName: ''
     }
   },
   created () {
     const userId = document.getElementById('user-id').innerHTML
+    this.fullName = document.getElementById('full-name').innerHTML
     this.setUserId(userId)
   },
   methods: {

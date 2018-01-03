@@ -1,6 +1,6 @@
 @{
     Layout = null;
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "TimeSheet Management System";
 }
 
 <html lang="en">
@@ -14,13 +14,10 @@
   <!-- TODO: Place fontawesome in webpack -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-  <title>Document</title>
+  <title>@ViewData["Title"]</title>
 
   <style>
-    #anti-forgery {
-      display: none;
-    }
-    #user-id {
+    #anti-forgery, #user-id, #full-name {
       display: none;
     }
   </style>
@@ -30,6 +27,7 @@
 
   <span id="anti-forgery">@Html.AntiForgeryToken()</span>
   <span id="user-id">@ViewData["UserId"]</span>
+  <span id="full-name">@ViewData["FullName"]</span>
   <div id="app"></div>
 
   <script src="~/dist/vendor.js" asp-append-version="true"></script>

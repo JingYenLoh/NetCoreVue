@@ -63,10 +63,13 @@
 
         <div class="navbar-end">
           <div class="navbar-item">
+            <span>{{ name }}</span>
+          </div>
+          <div class="navbar-item">
             <button class="button is-primary"
                     @click="signOut">
               <b-icon pack="fa"
-                      icon="sign-out"></b-icon>
+                      icon="sign-out" />
               <span>Sign out</span>
             </button>
           </div>
@@ -85,6 +88,9 @@ export default {
     return {
       isActive: false
     }
+  },
+  props: {
+    name: String
   },
   methods: {
     async signOut () {
