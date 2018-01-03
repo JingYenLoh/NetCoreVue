@@ -109,7 +109,7 @@ namespace NetCoreVue.Controllers
                 return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective start date, {latestStartDate.ToShortDateString()}." });
             }
 
-            if (accountRate.EffectiveStartDate < latestEndDate && latestEndDate != null) {
+            if (accountRate.EffectiveStartDate < latestEndDate) {
                 return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective end date, {latestEndDate?.ToShortDateString()}." });
             }
 
@@ -146,18 +146,20 @@ namespace NetCoreVue.Controllers
             var latestStartDate = await _context.AccountRates
                 .Where(a => a.CustomerAccountId == accountRate.CustomerAccountId)
                 .Select(a => a.EffectiveStartDate)
+                .DefaultIfEmpty(DateTime.Now)
                 .MaxAsync();
 
             var latestEndDate = await _context.AccountRates
                 .Where(a => a.CustomerAccountId == accountRate.CustomerAccountId)
                 .Select(a => a.EffectiveEndDate)
+                .DefaultIfEmpty(DateTime.Now)
                 .MaxAsync();
 
             if (accountRate.EffectiveStartDate < latestStartDate) {
                 return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective start date, {latestStartDate.ToShortDateString()}." });
             }
 
-            if (accountRate.EffectiveStartDate < latestEndDate && latestEndDate != null) {
+            if (accountRate.EffectiveStartDate < latestEndDate) {
                 return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective end date, {latestEndDate?.ToShortDateString()}." });
             }
 
