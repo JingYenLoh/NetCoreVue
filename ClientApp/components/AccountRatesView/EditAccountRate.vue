@@ -8,19 +8,19 @@
         <div class="field">
           <label for="ratePerHr"
                  class="label">Rate per Hour</label>
-          <p class="control">
+          <div class="control">
             <input type="number"
                    name="ratePerHr"
                    class="input"
                    :class="{ 'is-danger': errors.has('ratePerHr') }"
                    placeholder=""
-                   v-validate="'required|min_value:0.01|decimal:2'"
+                   v-validate="'required|min_value:0.01|decimal:2|max_value:9999.99'"
                    v-model="ratePerHour" />
             <p v-show="errors.has('ratePerHr')"
                class="help is-danger">
               {{ errors.first('ratePerHr') }}
             </p>
-          </p>
+          </div>
         </div>
 
         <b-field label="Effective Start Date">
@@ -47,6 +47,7 @@
             <button type="submit"
                     class="button is-primary"
                     :class="{ 'is-loading': isLoading }"
+                    :disabled="errors.any()"
                     @click="editRate">
               Save
             </button>
@@ -129,7 +130,7 @@ export default {
 
         switch (response.status) {
           case 400:
-            message = 'Please fill in all fields properly.'
+            message = response.data.message
             break
           case 404:
             message = 'Account rate not found!'

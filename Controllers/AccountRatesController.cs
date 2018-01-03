@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -92,6 +93,26 @@ namespace NetCoreVue.Controllers
                 return BadRequest();
             }
 
+            var latestStartDate = await _context.AccountRates
+                .Where(a => a.CustomerAccountId == id)
+                .Select(a => a.EffectiveStartDate)
+                .DefaultIfEmpty(DateTime.Now)
+                .MaxAsync();
+
+            var latestEndDate = await _context.AccountRates
+                .Where(a => a.CustomerAccountId == id)
+                .Select(a => a.EffectiveEndDate)
+                .DefaultIfEmpty(DateTime.Now)
+                .MaxAsync();
+
+            if (accountRate.EffectiveStartDate < latestStartDate) {
+                return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective start date, {latestStartDate.ToShortDateString()}." });
+            }
+
+            if (accountRate.EffectiveStartDate < latestEndDate && latestEndDate != null) {
+                return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective end date, {latestEndDate?.ToShortDateString()}." });
+            }
+
             _context.Entry(accountRate).State = EntityState.Modified;
 
             try
@@ -120,6 +141,24 @@ namespace NetCoreVue.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            var latestStartDate = await _context.AccountRates
+                .Where(a => a.CustomerAccountId == accountRate.CustomerAccountId)
+                .Select(a => a.EffectiveStartDate)
+                .MaxAsync();
+
+            var latestEndDate = await _context.AccountRates
+                .Where(a => a.CustomerAccountId == accountRate.CustomerAccountId)
+                .Select(a => a.EffectiveEndDate)
+                .MaxAsync();
+
+            if (accountRate.EffectiveStartDate < latestStartDate) {
+                return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective start date, {latestStartDate.ToShortDateString()}." });
+            }
+
+            if (accountRate.EffectiveStartDate < latestEndDate && latestEndDate != null) {
+                return BadRequest(new { message = $"Start Date cannont be earlier than the latest effective end date, {latestEndDate?.ToShortDateString()}." });
             }
 
             _context.AccountRates.Add(accountRate);

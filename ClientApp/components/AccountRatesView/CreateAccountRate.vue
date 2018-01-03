@@ -124,7 +124,7 @@ export default {
 
         switch (response.status) {
           case 400:
-            message = 'Please fill in the account rate data properly'
+            message = response.data.message
             break
           default:
             message = 'Failed to create Account rate'
