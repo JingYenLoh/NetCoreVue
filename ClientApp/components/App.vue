@@ -7,16 +7,17 @@
 
 <script>
 import Vue from 'vue'
-import NavBar from './nav-bar.vue'
+import NavBar from './NavBar.vue'
 import { mapActions } from 'vuex'
-
-Vue.component('nav-bar', NavBar)
 
 export default {
   data () {
     return {
       fullName: ''
     }
+  },
+  components: {
+    'nav-bar': NavBar
   },
   created () {
     const userId = document.getElementById('user-id').innerHTML
@@ -36,20 +37,20 @@ export default {
 @import "~bulma/sass/utilities/_all";
 
 // Set your colors
-$primary: #6B69D6;
+$primary: #6b69d6;
 $primary-invert: findColorInvert($primary);
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
-  "white"  : ($white  , $black         ),
-  "black"  : ($black  , $white         ),
-  "light"  : ($light  , $light-invert  ),
-  "dark"   : ($dark   , $dark-invert   ),
+  "white" : ($white, $black),
+  "black" : ($black, $white),
+  "light" : ($light, $light-invert),
+  "dark" : ($dark, $dark-invert),
   "primary": ($primary, $primary-invert),
-  "info"   : ($info   , $info-invert   ),
+  "info" : ($info, $info-invert),
   "success": ($success, $success-invert),
   "warning": ($warning, $warning-invert),
-  "danger" : ($danger , $danger-invert )
+  "danger" : ($danger, $danger-invert)
 );
 
 // Links
