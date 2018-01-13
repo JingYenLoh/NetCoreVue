@@ -34,21 +34,21 @@ namespace NetCoreVue.Controllers
         {
             // return _context.CustomerAccounts;
             var query = _context.CustomerAccounts
-            .Include(acc => acc.AccountRates)
-            .Include(acc => acc.CreatedBy)
-            .Include(acc => acc.UpdatedBy)
-            .Include(acc => acc.InstructorAccounts)
-            .Select(acc => new
-            {
-                customerAccountId = acc.CustomerAccountId,
-                accountName       = acc.AccountName,
-                numAccountRates   = acc.AccountRates.Count,
-                numInstructors    = acc.InstructorAccounts.Count,
-                comments          = acc.Comments,
-                updatedBy         = acc.UpdatedBy.FullName,
-                updatedAt         = acc.UpdatedAt,
-                isVisible         = acc.IsVisible
-            });
+                .Include(acc => acc.AccountRates)
+                .Include(acc => acc.CreatedBy)
+                .Include(acc => acc.UpdatedBy)
+                .Include(acc => acc.InstructorAccounts)
+                .Select(acc => new
+                {
+                    customerAccountId = acc.CustomerAccountId,
+                    accountName       = acc.AccountName,
+                    numAccountRates   = acc.AccountRates.Count,
+                    numInstructors    = acc.InstructorAccounts.Count,
+                    comments          = acc.Comments,
+                    updatedBy         = acc.UpdatedBy.FullName,
+                    updatedAt         = acc.UpdatedAt,
+                    isVisible         = acc.IsVisible
+                });
             return Json(query);
         }
 
@@ -148,14 +148,14 @@ namespace NetCoreVue.Controllers
                     transaction.Commit();
                     return CreatedAtAction("GetCustomerAccount", new { accId = customerAccount.CustomerAccountId, rateId = accountRate.AccountRateId }, customerAccount);
                 }
-                catch (SqlException e)
+                catch (SqlException e) when (e.InnerException.Message.Contains("CustomerAccount_AccountName_UniqueConstraint"))
                 {
-                    if (e.InnerException.Message.Contains("CustomerAccount_AccountName_UniqueConstraint"))
-                    {
-                        var message = $"The customer account {vm.AccountName} already exists in the database.";
-                        return StatusCode(409, new { message });
-                    }
-                    return BadRequest(e.Message);
+                    var message = $"The customer account {vm.AccountName} already exists in the database.";
+                    return StatusCode(409, new { message });
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(new { message = e.Message });
                 }
             }
         }
