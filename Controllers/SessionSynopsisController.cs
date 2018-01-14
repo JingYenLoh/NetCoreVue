@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -29,16 +30,16 @@ namespace NetCoreVue.Controllers
         public IActionResult GetSessionSynopses()
         {
             var query = _context.SessionSynopses
-            .Include(ss => ss.UpdatedBy)
-            .Include(ss => ss.CreatedBy)
-            .Select(ss => new
-            {
-                sessionSynopsisId   = ss.SessionSynopsisId,
-                sessionSynopsisName = ss.SessionSynopsisName,
-                createdBy           = ss.CreatedBy.FullName,
-                isVisible           = ss.IsVisible,
-                updatedBy           = ss.UpdatedBy.FullName
-            });
+                .Include(ss => ss.UpdatedBy)
+                .Include(ss => ss.CreatedBy)
+                .Select(ss => new
+                {
+                    sessionSynopsisId = ss.SessionSynopsisId,
+                    sessionSynopsisName = ss.SessionSynopsisName,
+                    createdBy = ss.CreatedBy.FullName,
+                    isVisible = ss.IsVisible,
+                    updatedBy = ss.UpdatedBy.FullName
+                });
 
             return Ok(query);
         }
@@ -91,14 +92,14 @@ namespace NetCoreVue.Controllers
                 }
                 throw;
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException e) when (e.InnerException.Message.Contains("SessionSynopsis_SessionSynopsisName_UniqueConstraint"))
             {
-                if (e.InnerException.Message.Contains("SessionSynopsis_SessionSynopsisName_UniqueConstraint"))
-                {
-                    var response = new { message = "A session synopsis with the same name already exists." };
-                    return StatusCode(409, response);
-                }
-                throw;
+                var response = new { message = "A session synopsis with the same name already exists." };
+                return StatusCode(409, response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
 
             return Ok(sessionSynopsis.SessionSynopsisName);
@@ -118,14 +119,14 @@ namespace NetCoreVue.Controllers
                 _context.SessionSynopses.Add(sessionSynopsis);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException e) when (e.InnerException.Message.Contains("SessionSynopsis_SessionSynopsisName_UniqueConstraint"))
             {
-                if (e.InnerException.Message.Contains("SessionSynopsis_SessionSynopsisName_UniqueConstraint"))
-                {
                     var response = new { message = "A session synopsis with the same name already exists." };
                     return StatusCode(409, response);
-                }
-                throw;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
 
             return CreatedAtAction("GetSessionSynopsis", new { id = sessionSynopsis.SessionSynopsisId }, sessionSynopsis);
