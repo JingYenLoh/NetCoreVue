@@ -32,7 +32,6 @@ namespace NetCoreVue.Controllers
         [HttpGet]
         public IActionResult GetCustomerAccounts()
         {
-            // return _context.CustomerAccounts;
             var query = _context.CustomerAccounts
                 .Include(acc => acc.AccountRates)
                 .Include(acc => acc.CreatedBy)
@@ -49,6 +48,7 @@ namespace NetCoreVue.Controllers
                     updatedAt         = acc.UpdatedAt,
                     isVisible         = acc.IsVisible
                 });
+
             return Json(query);
         }
 

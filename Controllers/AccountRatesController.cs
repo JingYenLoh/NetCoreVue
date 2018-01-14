@@ -32,7 +32,8 @@ namespace NetCoreVue.Controllers
                 return BadRequest(ModelState);
             }
 
-            var accountRate = await _context.AccountRates.SingleOrDefaultAsync(m => m.AccountRateId == id);
+            var accountRate = await _context.AccountRates
+                .SingleOrDefaultAsync(m => m.AccountRateId == id);
 
             if (accountRate == null)
             {
@@ -178,7 +179,8 @@ namespace NetCoreVue.Controllers
                 return BadRequest(ModelState);
             }
 
-            var accountRate = await _context.AccountRates.SingleOrDefaultAsync(r => r.AccountRateId == id);
+            var accountRate = await _context.AccountRates
+                .SingleOrDefaultAsync(r => r.AccountRateId == id);
             if (accountRate == null)
             {
                 return NotFound();
