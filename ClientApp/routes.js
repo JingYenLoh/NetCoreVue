@@ -28,8 +28,7 @@ export const routes = [
   {
     path: '/',
     component: HomePage,
-    display: 'Home',
-    style: 'home'
+    display: 'Home'
   },
   {
     path: '/Customers',
@@ -58,7 +57,6 @@ export const routes = [
     path: '/Sessions',
     component: SessionHome,
     display: 'Sessions',
-    style: 'clock-o',
     children: [
       {
         path: 'Index',
