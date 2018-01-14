@@ -48,32 +48,32 @@
                           label="Visibility">
             <b-icon v-if="props.row.isVisible"
                     pack="fa"
-                    icon="check"></b-icon>
+                    icon="check" />
           </b-table-column>
 
           <b-table-column label="Modify">
             <router-link class="button is-warning"
                          :to="{ name: 'editCustomer', params: { id: props.row.customerAccountId }}">
               <b-icon pack="fa"
-                      icon="pencil"></b-icon>
+                      icon="pencil" />
               <span>Edit</span>
             </router-link>
             <router-link class="button is-info"
                          :to="{ name: 'manageRates', params: { id: props.row.customerAccountId, name: props.row.accountName }}">
               <b-icon pack="fa"
-                      icon="pencil"></b-icon>
+                      icon="pencil" />
               <span>Rates</span>
             </router-link>
             <button class="button is-info"
                     @click="manageAccountDetails">
               <b-icon pack="fa"
-                      icon="pencil"></b-icon>
+                      icon="pencil" />
               <span>Details</span>
             </button>
             <button class="button is-danger"
                     @click="confirmDelete(props.row.customerAccountId)">
               <b-icon pack="fa"
-                      icon="trash-o"></b-icon>
+                      icon="trash-o" />
               <span>Delete</span>
             </button>
           </b-table-column>

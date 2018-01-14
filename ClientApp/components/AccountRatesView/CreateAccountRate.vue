@@ -8,7 +8,7 @@
         <div class="field">
           <label for="ratePerHr"
                  class="label">Rate per Hour</label>
-          <p class="control">
+          <div class="control">
             <input type="number"
                    name="ratePerHr"
                    class="input"
@@ -20,7 +20,7 @@
                class="help is-danger">
               {{ errors.first('ratePerHr') }}
             </p>
-          </p>
+          </div>
         </div>
 
         <b-field label="Effective Start Date">
