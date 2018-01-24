@@ -24,6 +24,12 @@ import ManageRate from 'components/AccountRatesView/ManageRate'
 import CreateRate from 'components/AccountRatesView/CreateAccountRate'
 import EditRate from 'components/AccountRatesView/EditAccountRate'
 
+// Account Details
+import DetailsHome from 'components/AccountDetailsView/index'
+import DetailsPage from 'components/AccountDetailsView/AccountDetailsPage'
+import CreateDetails from 'components/AccountDetailsView/CreateAccountDetail'
+import EditDetails from 'components/AccountDetailsView/EditAccountDetail'
+
 export const routes = [
   {
     path: '/',
@@ -113,6 +119,30 @@ export const routes = [
         path: 'Edit/:id',
         name: 'editRates',
         component: EditRate,
+        props: true
+      }
+    ]
+  },
+  {
+    path: '/AccountDetails',
+    name: 'accountDetails',
+    component: DetailsHome,
+    children: [
+      {
+        path: ':id',
+        component: DetailsPage,
+        props: true
+      },
+      {
+        path: 'Create/:id',
+        name: 'createDetails',
+        component: CreateDetails,
+        props: true
+      },
+      {
+        path: 'Update/:id',
+        name: 'editDetails',
+        component: EditDetails,
         props: true
       }
     ]
