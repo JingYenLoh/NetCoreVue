@@ -64,12 +64,12 @@
                       icon="pencil" />
               <span>Rates</span>
             </router-link>
-            <button class="button is-info"
-                    @click="manageAccountDetails">
+            <router-link class="button is-info"
+                         :to="`/AccountDetails/${props.row.customerAccountId}`">
               <b-icon pack="fa"
                       icon="pencil" />
               <span>Details</span>
-            </button>
+            </router-link>
             <button class="button is-danger"
                     @click="confirmDelete(props.row.customerAccountId)">
               <b-icon pack="fa"
@@ -113,9 +113,6 @@ export default {
     }
   },
   methods: {
-    manageAccountDetails () {
-      window.alert('TODO: Launch manage account details, probably a new route')
-    },
     confirmDelete (id) {
       this.$dialog.confirm({
         title: 'Deleting account',
