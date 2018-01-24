@@ -25,10 +25,10 @@ namespace NetCoreVue.Helpers
                 var roleManager = new RoleManager<IdentityRole>(roleStore, null, null, null, null);
 
                 //Defining user "roles" inside the AspNetRoles table.
-                var adminRole = new IdentityRole {Name = "Admin"};
+                var adminRole = new IdentityRole { Name = "Admin" };
                 await roleManager.CreateAsync(adminRole);
 
-                var officerRole = new IdentityRole {Name = "Instructor"};
+                var officerRole = new IdentityRole { Name = "Instructor" };
                 await roleManager.CreateAsync(officerRole);
 
                 var userStore = new UserStore<ApplicationUser>(context);
