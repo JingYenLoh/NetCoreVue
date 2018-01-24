@@ -11,7 +11,7 @@
             <input name="synopsis"
                    :class="{ 'input': true, 'is-danger': errors.has('synopsis') }"
                    type="text"
-                   :placeholder="sessionSynopsisName"
+                   :placeholder="data.sessionSynopsisName"
                    v-validate="'alpha_num_spaces|required|min:1|max:100'"
                    v-model="data.sessionSynopsisName" />
             <p v-show="errors.has('synopsis')"
@@ -23,7 +23,7 @@
 
         <b-field label="Visibility">
           <div class="field">
-            <b-switch v-model="isVisible"
+            <b-switch v-model="data.isVisible"
                       true-value="On"
                       false-value="Off">
               {{ isVisible }}
@@ -62,7 +62,8 @@ export default {
     return {
       isLoading: false,
       data: {
-        sessionSynopsisName: ''
+        sessionSynopsisName: '',
+        isVisible: 'Off'
       }
     }
   },
