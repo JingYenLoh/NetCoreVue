@@ -6,6 +6,7 @@
       <div class="navbar-brand">
 
         <router-link class="navbar-item"
+                     @click.native="isActive = false"
                      to="/">
           <img src="https://vuejs.org/images/logo.png"
                alt="Vue is the best"
@@ -15,7 +16,7 @@
 
         <span class="navbar navbar-burger is-primary"
               :class="{ 'is-active': isActive }"
-              @click='isActive = !isActive'>
+              @click="isActive = !isActive">
           <span></span>
           <span></span>
           <span></span>
@@ -30,10 +31,12 @@
             <a class="navbar-link">Session</a>
             <div class="navbar-dropdown">
               <router-link class="navbar-item"
+                           @click.native="isActive = false"
                            :to="'/Sessions/Index'">
                 Manage Session
               </router-link>
               <router-link class="navbar-item"
+                           @click.native="isActive = false"
                            :to="'/Sessions/Create'">
                 Create Session
               </router-link>
@@ -44,10 +47,12 @@
             <a class="navbar-link">Customer</a>
             <div class="navbar-dropdown">
               <router-link class="navbar-item"
+                           @click.native="isActive = false"
                            :to="'/Customers/Index'">
                 Manage Customers
               </router-link>
               <router-link class="navbar-item"
+                           @click.native="isActive = false"
                            :to="'/Customers/Create'">
                 Create Customer
               </router-link>
@@ -55,6 +60,7 @@
           </div>
 
           <router-link class="navbar-item"
+                       @click.native="isActive = false"
                        :to="'/Users/Index'">
             Manage User
           </router-link>
