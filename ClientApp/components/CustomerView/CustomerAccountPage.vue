@@ -12,17 +12,38 @@
                default-sort="accountName">
         <template slot-scope="props">
 
+          <!-- Account Name -->
           <b-table-column field="accountName"
                           label="Account Name"
                           sortable>
             {{ props.row.accountName }}
           </b-table-column>
 
+          <!-- Rates Data -->
           <b-table-column field="accountRates"
                           label="# of Rates Data"
                           numeric>
             {{ props.row.numAccountRates }}
           </b-table-column>
+
+          <!-- Comments -->
+          <b-table-column field="comments"
+                          label="comments">
+            {{ props.row.comments.slice(0, 20) }}
+            <span v-if="props.row.comments.length > 20"
+                  class="tag is-info"
+                  @click="showComments(props.row.comments)">
+              ...
+            </span>
+          </b-table-column>
+
+          <b-modal :active.sync="showModal">
+            <div class="card">
+              <div class="card-content">
+                <div class="content">{{ comments }}</div>
+              </div>
+            </div>
+          </b-modal>
 
           <b-table-column field="instructorAccounts"
                           label="# of Instructors"
@@ -101,7 +122,9 @@ export default {
     return {
       customers: [],
       perPage: 10,
-      selected: null
+      selected: null,
+      showModal: false,
+      comments: ''
     }
   },
   async created () {
@@ -126,7 +149,7 @@ export default {
               if (status === 200) {
                 return true
               } else {
-                throw new Error(response)
+                throw new Error(status)
               }
             }).then(() => axios.get('/api/CustomerAccounts'))
             .then(({ data }) => this.customers = data)
@@ -137,11 +160,21 @@ export default {
     },
     createCustomerAccount () {
       this.$router.push('/Customers/Create')
+    },
+    showComments(comments) {
+      this.showModal = true
+      this.comments = comments
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+span.tag.is-info {
+  cursor: pointer;
+}
 
+.card-content .content {
+  overflow-wrap: break-word;
+}
 </style>
