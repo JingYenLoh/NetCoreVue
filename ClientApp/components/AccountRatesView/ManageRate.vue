@@ -25,7 +25,7 @@
                           label="Effective End Date"
                           sortable>
             <!-- Display ~ if effectiveEndDate is null -->
-            {{ props.row.effectiveEndDate === null ? '~' : new Date(props.row.effectiveEndDate).toLocaleString() }}
+            {{ props.row.effectiveEndDate ? '~' : new Date(props.row.effectiveEndDate).toLocaleString() }}
           </b-table-column>
 
           <b-table-column field="ratePerHour"
