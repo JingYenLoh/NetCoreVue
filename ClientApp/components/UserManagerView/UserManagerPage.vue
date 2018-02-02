@@ -13,10 +13,10 @@
         <template slot-scope="props">
 
           <!-- Id -->
-          <b-table-column field="id"
+          <!-- <b-table-column field="id"
                           label="Id">
             {{ props.row.id }}
-          </b-table-column>
+          </b-table-column> -->
 
           <!-- Username -->
           <b-table-column field="userName"
@@ -54,7 +54,7 @@
           <b-table-column field="roleName"
                           label="Role"
                           sortable>
-            {{ props.row.roleName }}
+            {{ props.row.roles.join() }}
           </b-table-column>
 
           <b-table-column label="Edit">
