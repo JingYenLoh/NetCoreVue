@@ -105,11 +105,11 @@ import router from '../../router'
 export default {
   data () {
     return {
-      userName: null,
-      fullName: null,
-      email: null,
-      isLoading: false,
-      role: null
+      userName  : null,
+      fullName  : null,
+      email     : null,
+      isLoading : false,
+      role      : null
     }
   },
   async created () {
@@ -132,10 +132,10 @@ export default {
   },
   methods: {
     async saveSynopsis () {
-      this.isLoading = !this.isLoading
+      this.isLoading = true
 
       try {
-        const { status } = await put(`/api/CustomerAccounts/${this.id}`, {
+        const { status } = await put(`/api/CustomerAccounts/${this.userName}`, {
         })
 
         if (status === 204) {
@@ -161,7 +161,7 @@ export default {
           type: 'is-danger',
         })
       } finally {
-        this.isLoading = !this.isLoading
+        this.isLoading = false
       }
     },
     cancel () {
