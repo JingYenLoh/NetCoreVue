@@ -153,16 +153,10 @@ export default {
             message: 'Customer Account successfully created!',
             type: 'is-success',
           })
-        } else {
-          // TODO: Use validation
-          this.$toast.open({
-            message: 'Failed to create Customer Account',
-            type: 'is-danger',
-          })
         }
-      } catch ({ message }) {
+      } catch (e) {
         this.$toast.open({
-          message,
+          message: e.data.message,
           type: 'is-danger',
         })
       } finally {
