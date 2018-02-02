@@ -53,6 +53,27 @@ namespace NetCoreVue.Controllers
         }
 
         // GET: api/CustomerAccounts/5
+        [HttpGet("Details/{id}")]
+        public async Task<IActionResult> GetCustomerAccountDetails([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userAccountDetails = await _context.AccountDetails
+                .Where(ad => ad.CustomerAccountId == id)
+                .ToListAsync();
+
+            if (userAccountDetails == null)
+            {
+                return NotFound();
+            }
+
+            return Json(userAccountDetails);
+        }
+
+        // GET: api/CustomerAccounts/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomerAccount([FromRoute] int id)
         {
@@ -155,7 +176,7 @@ namespace NetCoreVue.Controllers
                 }
                 catch (Exception e)
                 {
-                    return BadRequest(new { message = e.Message });
+                    return BadRequest(new { message = e.InnerException.Message });
                 }
             }
         }
