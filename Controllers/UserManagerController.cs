@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NetCoreVue.Data;
 using NetCoreVue.Models;
 using NetCoreVue.Models.UserViewModels;
@@ -18,11 +19,16 @@ namespace NetCoreVue.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger _logger;
 
-        public UserManagerController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public UserManagerController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            ILogger<UserManagerController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         // GET: api/UserManager
@@ -85,7 +91,7 @@ namespace NetCoreVue.Controllers
 
             foreach (var user in users)
             {
-                var roleName = await _userManager.GetRolesAsync(user);
+                var userRoles = await _userManager.GetRolesAsync(user);
                 results.Add(new UserViewModel
                 {
                     Id             = user.Id,
@@ -93,7 +99,7 @@ namespace NetCoreVue.Controllers
                     Email          = user.Email,
                     FullName       = user.FullName,
                     EmailConfirmed = user.EmailConfirmed,
-                    RoleName       = roleName[0] // Only need to retrieve first
+                    Roles          = userRoles
                 });
             }
 
@@ -137,6 +143,6 @@ namespace NetCoreVue.Controllers
         }
 
         // TODO: Write APIs for updating user roles
-        
+
     }
 }
