@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -116,8 +116,8 @@ namespace NetCoreVue.Controllers
         }
 
         // PUT: api/UserManager/5
-        [HttpPut("{id}")]
-        public IActionResult Put([FromRoute] string id, [FromBody] string value)
+        [HttpPut("{userName}")]
+        public IActionResult Put([FromRoute] string userName, [FromBody] string value)
         {
             throw new NotImplementedException();
         }
