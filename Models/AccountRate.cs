@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace NetCoreVue.Models
 {
@@ -12,6 +13,8 @@ namespace NetCoreVue.Models
         public int AccountRateId { get; set; }
 
         public int CustomerAccountId { get; set; }
+
+        [IgnoreDataMember]
         public CustomerAccount CustomerAccount { get; set; }
 
         [Required]
