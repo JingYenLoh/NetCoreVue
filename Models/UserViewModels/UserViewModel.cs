@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreVue.Models.UserViewModels
@@ -22,7 +23,7 @@ namespace NetCoreVue.Models.UserViewModels
         public bool EmailConfirmed { get; set; }
 
         [Required]
-        public string RoleName { get; set; }
+        public IList<string> Roles { get; set; }
 
     }
 }
