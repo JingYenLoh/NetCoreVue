@@ -24,8 +24,6 @@ namespace NetCoreVue.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(
-                @"Server=DIT-NB1626050;database=TimeSheetMgmtDb_V2;Trusted_Connection=True;MultipleActiveResultSets=True");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
