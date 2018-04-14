@@ -36,6 +36,8 @@ namespace NetCoreVue.Helpers
                     new UserManager<ApplicationUser>(userStore, null, null, null, null, null, null, null, null);
                 var hasher = new PasswordHasher<ApplicationUser>();
 
+                #region kenny
+
                 var kenny = new ApplicationUser
                 {
                     UserName = "88881",
@@ -45,6 +47,19 @@ namespace NetCoreVue.Helpers
                 kenny.PasswordHash = hasher.HashPassword(kenny, "P@ssw0rd");
                 await userManager.CreateAsync(kenny);
                 await userManager.AddToRoleAsync(kenny, "Admin");
+
+                var userInfoKenny = new UserInfo
+                {
+                    FullName = kenny.FullName,
+                    LoginUserName = kenny.UserName,
+                    Email = kenny.Email,
+                    IsActive = true
+                };
+                context.UserInfo.Add(userInfoKenny);
+
+                #endregion
+
+                #region juliet
 
                 var juliet = new ApplicationUser
                 {
@@ -56,6 +71,19 @@ namespace NetCoreVue.Helpers
                 await userManager.CreateAsync(juliet);
                 await userManager.AddToRoleAsync(juliet, "Admin");
 
+                var userInfoJuliet = new UserInfo
+                {
+                    FullName = juliet.FullName,
+                    LoginUserName = juliet.UserName,
+                    Email = juliet.Email,
+                    IsActive = true
+                };
+                context.UserInfo.Add(userInfoJuliet);
+                
+                #endregion
+
+                #region randy
+
                 var randy = new ApplicationUser
                 {
                     UserName = "88883",
@@ -65,6 +93,19 @@ namespace NetCoreVue.Helpers
                 randy.PasswordHash = hasher.HashPassword(randy, "P@ssw0rd");
                 await userManager.CreateAsync(randy);
                 await userManager.AddToRoleAsync(randy, "Instructor");
+
+                var userInfoRandy = new UserInfo
+                {
+                    FullName = randy.FullName,
+                    LoginUserName = randy.UserName,
+                    Email = randy.Email,
+                    IsActive = true
+                };
+                context.UserInfo.Add(userInfoRandy);
+
+                #endregion
+
+                #region thomas
 
                 var thomas = new ApplicationUser
                 {
@@ -76,6 +117,19 @@ namespace NetCoreVue.Helpers
                 await userManager.CreateAsync(thomas);
                 await userManager.AddToRoleAsync(thomas, "Instructor");
 
+                var userInfoThomas = new UserInfo
+                {
+                    FullName = thomas.FullName,
+                    LoginUserName = thomas.UserName,
+                    Email = thomas.Email,
+                    IsActive = true
+                };
+                context.UserInfo.Add(userInfoThomas);
+
+                #endregion
+
+                #region ben
+
                 var ben = new ApplicationUser
                 {
                     UserName = "88885",
@@ -85,6 +139,19 @@ namespace NetCoreVue.Helpers
                 ben.PasswordHash = hasher.HashPassword(ben, "P@ssw0rd");
                 await userManager.CreateAsync(ben);
                 await userManager.AddToRoleAsync(ben, "Instructor");
+
+                var userInfoBen = new UserInfo
+                {
+                    FullName = ben.FullName,
+                    LoginUserName = ben.UserName,
+                    Email = ben.Email,
+                    IsActive = true
+                };
+                context.UserInfo.Add(userInfoBen);
+
+                #endregion
+
+                #region gabriel
 
                 var gabriel = new ApplicationUser
                 {
@@ -96,6 +163,19 @@ namespace NetCoreVue.Helpers
                 await userManager.CreateAsync(gabriel);
                 await userManager.AddToRoleAsync(gabriel, "Instructor");
 
+                var userInfoGabriel = new UserInfo
+                {
+                    FullName = gabriel.FullName,
+                    LoginUserName = gabriel.UserName,
+                    Email = gabriel.Email,
+                    IsActive = true
+                };
+                context.UserInfo.Add(userInfoGabriel);
+
+                #endregion
+
+                #region fred
+
                 var fred = new ApplicationUser
                 {
                     UserName = "88887",
@@ -106,6 +186,17 @@ namespace NetCoreVue.Helpers
                 await userManager.CreateAsync(fred);
                 await userManager.AddToRoleAsync(fred, "Instructor");
 
+                var userInfoFred = new UserInfo
+                {
+                    FullName = fred.FullName,
+                    LoginUserName = fred.UserName,
+                    Email = fred.Email,
+                    IsActive = true
+                };
+                context.UserInfo.Add(userInfoFred);
+
+                #endregion
+                
                 context.SaveChanges();
             }
         }
