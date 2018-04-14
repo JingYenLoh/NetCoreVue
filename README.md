@@ -41,8 +41,3 @@ $ npm run dev     # OR yarn run dev
 ```
 
 5. Go to `localhost:5000`. The app should be up and running.
-
-## Issues
-Apparently the `UserInfo` isn't getting seeded properly. I'll need to
-investigate into this, but feel free to file an issue with the details to
-motivate my lazy bum to fix this.
